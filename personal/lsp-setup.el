@@ -11,6 +11,27 @@
 ;(setq lsp-use-plists t)  -- causes errors I can't figure out
 
 
+(use-package conda
+  :config (progn
+            (conda-env-initialize-interactive-shells)
+            (conda-env-initialize-eshell)
+
+            (setq conda-env-home-directory (expand-file-name "~/anaconda3/")
+		    conda-env-subdirectory "envs")
+            (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
+
+;            (conda-env-autoactivate-mode t)
+))
+
+(setq ein:jupyter-default-server-command (format "%s/.emacs.d/ein_jupyter.sh" (getenv "HOME")))
+
+(use-package jupyter
+  :commands (jupyter-run-server-repl
+             jupyter-run-repl
+             jupyter-server-list-kernels)
+  :init (eval-after-load 'jupyter-org-extensions ; conflicts with my helm config, I use <f2 #>
+          '(unbind-key "C-c h" jupyter-org-interaction-mode-map)))
+
 
 (use-package lsp-mode
   :config
