@@ -6,7 +6,7 @@
 (setq conda-env-home-directory (expand-file-name "~/anaconda3/"))
 (setq
       read-process-output-max (* 1024 1024))
-;(setq lsp-use-plists t)
+;(setq lsp-use-plists t)  -- causes errors I can't figure out
 
 
 
