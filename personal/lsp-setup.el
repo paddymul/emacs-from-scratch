@@ -6,13 +6,15 @@
 (setq conda-env-home-directory (expand-file-name "~/anaconda3/"))
 (setq
       read-process-output-max (* 1024 1024))
+
+(setq lsp-log-io nil)
 ;(setq lsp-use-plists t)  -- causes errors I can't figure out
 
 
 
 (use-package lsp-mode
   :config
-  (setq lsp-idle-delay 0.5
+  (setq lsp-idle-delay 0.2
         lsp-enable-symbol-highlighting t
         lsp-enable-snippet nil  ;; Not supported by company capf, which is the recommended company backend
         lsp-pyls-plugins-flake8-enabled t)
