@@ -4,6 +4,10 @@
 (custom-set-variables
  '(conda-anaconda-home "/home/paddy/anaconda3/"))
 (setq conda-env-home-directory (expand-file-name "~/anaconda3/"))
+(setq
+      read-process-output-max (* 1024 1024))
+;(setq lsp-use-plists t)
+
 
 
 (use-package lsp-mode
@@ -25,11 +29,13 @@
   :hook
   ((python-mode . lsp)
    (lsp-mode . lsp-enable-which-key-integration))
-  :bind (:map evil-normal-state-map
-              ("gh" . lsp-describe-thing-at-point)
-              :map md/leader-map
-              ("Ff" . lsp-format-buffer)
-              ("FR" . lsp-rename)))
+  ;; :bind (:map evil-normal-state-map
+  ;;             ("gh" . lsp-describe-thing-at-point)
+  ;;             :map md/leader-map
+  ;;             ("Ff" . lsp-format-buffer)
+  ;;             ("FR" . lsp-rename))
+
+)
 
 (use-package lsp-ui
   :config (setq lsp-ui-sideline-show-hover t
@@ -42,11 +48,13 @@
                 lsp-ui-doc-include-signature t
                 lsp-ui-doc-use-childframe t)
   :commands lsp-ui-mode
-  :bind (:map evil-normal-state-map
-              ("gd" . lsp-ui-peek-find-definitions)
-              ("gr" . lsp-ui-peek-find-references)
-              :map md/leader-map
-              ("Ni" . lsp-ui-imenu)))
+  ;; :bind (:map evil-normal-state-map
+  ;;             ("gd" . lsp-ui-peek-find-definitions)
+  ;;             ("gr" . lsp-ui-peek-find-references)
+  ;;             :map md/leader-map
+  ;;             ("Ni" . lsp-ui-imenu))
+
+)
 
 (use-package pyvenv
   :demand t
