@@ -20,7 +20,7 @@
 		    conda-env-subdirectory "envs")
             (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
 
-;            (conda-env-autoactivate-mode t)
+            (conda-env-autoactivate-mode t)
 ))
 
 (setq ein:jupyter-default-server-command (format "%s/.emacs.d/ein_jupyter.sh" (getenv "HOME")))

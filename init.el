@@ -648,7 +648,7 @@
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'" "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'" "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
  '(magit-git-executable "/usr/local/bin/git")
  '(package-selected-packages
-   '(amx default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+   '(ein default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
@@ -670,35 +670,49 @@
     (load-directory "~/.emacs.d/personal")
 
 
+(comment
+
+ per directory  jupyter notebook
+ jupyter notebook daemon for datascience generally, test prep, and vizcomp
+
+ org <-> mobile <-> mac
+ slime/clojure setup
+ learn smart paren mode
+
+ formatting per directory
+ 
+ run-once with reloading macro
+ all temp files in different location
+
+ gui version of debug init
+
+ hook to prevent saving syntax error in .el files
+
+make emacs behave same from daemon start vs commandline start
+ 
+ )
+
+
 (add-to-list 'safe-local-variable-values '(conda-project-env-path . "base"))
 (add-to-list 'safe-local-variable-values '(conda-project-env-path . "ds-play"))
 
 (defun efs/start-hook ()
 		(message "start-hook begin")		
+		(find-file  (expand-file-name "~/.emacs.d/init.el"))
+		(find-file  (expand-file-name "~/.emacs.d/personal/lsp-setup.el"))
 		(call-interactively 'shell)
-				(find-file  (expand-file-name "~/.emacs.d/personal/lsp-setup.el"))
-				(find-file  (expand-file-name "~/.emacs.d/init.el"))
-				(call-interactively 'shell)
-				( counsel--M-x-externs)
-				;(call-interactively 'counsel-M-x)
-		(message "start-hook end")		
-				)
+		(counsel--M-x-externs)
+		(message "start-hook end"))
+(add-hook 'emacs-startup-hook #'efs/start-hook)
+				
 (defun efs/frame-start-hook ()
 		(message "frame-start--hook begin")		
 		(switch-to-buffer "init.el")
 		(end-of-buffer)
 		(call-interactively 'split-window-right)
-		(switch-to-buffer "*shell*")		
-					;(call-interactively 'counsel-M-x)
-		(message "frame-start-hook end")		
-				)
+		(switch-to-buffer "*shell*")
+		(ein:run ein:jupyter-default-server-command)
+		(message "frame-start-hook end"))
 
-(add-hook 'emacs-startup-hook 'efs/start-hook)
-(add-hook 'server-after-make-frame-hook 'efs/frame-start-hook)
-
-
-				
-
-
-
+(add-hook 'server-after-make-frame-hook #'efs/frame-start-hook)
 
