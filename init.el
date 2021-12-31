@@ -706,7 +706,7 @@ make emacs behave same from daemon start vs commandline start
   used as follows
   (hook-add-or-update
      shell-mode-hook fourth-shell-hook
-     (message "macro fourth rev 2"))"
+     (message \"macro fourth rev 2\"))"
   
   `(progn
      (if (fboundp ',fname)
