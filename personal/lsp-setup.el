@@ -20,10 +20,22 @@
 		    conda-env-subdirectory "envs")
             (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
 
-            (conda-env-autoactivate-mode t)
+;            (conda-env-autoactivate-mode 'nil)
 ))
 
-(setq ein:jupyter-default-server-command (format "%s/.emacs.d/ein_jupyter.sh" (getenv "HOME")))
+;; (call-interactively 'ein:jupyter-server-start nil
+;; 		    (vector
+;; 		     ein:listen-to-jpy-daemon
+;; 		     "unused"))
+
+
+
+
+
+(defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
+(setq ein:jupyter-default-server-command ein:listen-to-jpy-daemon)
+(setq ein:jupyter-default-notebook-directory "unused")
+
 
 (use-package jupyter
   :commands (jupyter-run-server-repl
@@ -32,6 +44,21 @@
   :init (eval-after-load 'jupyter-org-extensions ; conflicts with my helm config, I use <f2 #>
           '(unbind-key "C-c h" jupyter-org-interaction-mode-map)))
 
+;; (defun ein:after-load () )
+
+;(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")
+;(require 'ein)
+
+;(use-package ein)
+;; (use-package ein
+;;   :init (eval-after-load 'ein
+;; 	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
+
+	  ;; '(call-interactively 'ein:jupyter-server-start t
+	  ;; 	      (vector
+	  ;; 	       ein:listen-to-jpy-daemon
+	  ;; 	       (format "%s/.emacs.d/" (getenv "HOME"))))
+	  ;; ))
 
 (use-package lsp-mode
   :config
@@ -207,7 +234,7 @@
                          (require 'dap-python)
                          (lsp))))
 
-(setq gc-cons-threshold (* 100 1024 1024)
+(setq gc-cons-threshold (* 256 1024 1024)
       read-process-output-max (* 1024 1024)
       treemacs-space-between-root-nodes nil
       company-idle-delay 0.0

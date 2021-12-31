@@ -653,7 +653,7 @@
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
  '(typescript-indent-level 2))
-; '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -711,7 +711,6 @@ make emacs behave same from daemon start vs commandline start
 		(end-of-buffer)
 		(call-interactively 'split-window-right)
 		(switch-to-buffer "*shell*")
-		(ein:run ein:jupyter-default-server-command)
 		(message "frame-start-hook end"))
 
 (add-hook 'server-after-make-frame-hook #'efs/frame-start-hook)
