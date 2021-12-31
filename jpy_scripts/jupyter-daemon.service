@@ -6,9 +6,15 @@ Description=Jupyter notebook daemon
 User=paddy
 
 
-
+# to enable run the following commands
 #sudo ln -s ~/.emacs.d/jpy_scripts/jupyter-daemon.service  /etc/systemd/system/jupyter-daemon.service
 
+# sudo systemctl daemon-reload
+# sudo systemctl enable jupyter-daemon
+# sudo systemctl start jupyter-daemon
+
+# to stop run
+# sudo systemctl stop jupyter-daemon
 
 #Code to execute
 #Can be the path to an executable or code itself
