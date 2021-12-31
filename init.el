@@ -698,6 +698,30 @@ make emacs behave same from daemon start vs commandline start
 (add-to-list 'safe-local-variable-values '(conda-project-env-path . "base"))
 (add-to-list 'safe-local-variable-values '(conda-project-env-path . "ds-play"))
 
+(defmacro hook-add-or-update (hook fname &rest body)
+  "Macro to make defining and updating hooks much easier.
+   Hook functions get an fname.
+   Before defining and adding a hook to a list, macro first checks if that fname is already defined, if so, the old version is removed from hook
+
+  used as follows
+  (hook-add-or-update
+     shell-mode-hook fourth-shell-hook
+     (message "macro fourth rev 2"))"
+  
+  `(progn
+     (if (fboundp ',fname)
+	 (progn 
+	   (message "defined fname of %s" ',fname)
+	   (remove-hook ',hook ',fname))
+       (message "not found fname of %s" ',fname))
+     (defun ,fname ()
+       ,@body)
+     (add-hook ',hook ',fname)))
+
+(hook-add-or-update
+ shell-mode-hook fourth-shell-hook
+ (message "macro fourth rev 2"))
+
 (defun efs/start-hook ()
 		(message "start-hook begin")		
 		(find-file  (expand-file-name "~/.emacs.d/init.el"))
@@ -716,3 +740,4 @@ make emacs behave same from daemon start vs commandline start
 		(message "frame-start-hook end"))
 
 (add-hook 'server-after-make-frame-hook #'efs/frame-start-hook)
+
