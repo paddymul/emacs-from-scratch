@@ -1,0 +1,32 @@
+[Unit]
+Description=Jupyter notebook daemon
+
+[Service]
+
+User=paddy
+
+
+
+#sudo ln -s ~/.emacs.d/jpy_scripts/jupyter-daemon.service  /etc/systemd/system/jupyter-daemon.service
+
+
+#Code to execute
+#Can be the path to an executable or code itself
+
+WorkingDirectory=/home/paddy/.emacs.d/jpy_scripts/
+
+#xecStart=/home/paddy/.emacs.d/jpy_scripts/jpy_run.sh
+#ExecStart=/home/paddy/.emacs.d/jpy_scripts/ein_jupyter.sh notebook --notebook-dir=/home/paddy/code/notebook-play/ --no-browser &> /home/paddy/.jupyter.out
+
+ExecStart=/home/paddy/.emacs.d/jpy_scripts/jpy_for_daemon.sh
+
+Type=simple
+
+TimeoutStopSec=10
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+
+WantedBy=multi-user.target

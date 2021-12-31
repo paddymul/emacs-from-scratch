@@ -672,14 +672,16 @@
 
 (comment
 
- per directory  jupyter notebook
- jupyter notebook daemon for datascience generally, test prep, and vizcomp
+; jupyter notebook daemon for datascience generally, test prep, and vizcomp
+;  per directory  jupyter notebook not possible
+
 
  org <-> mobile <-> mac
  slime/clojure setup
  learn smart paren mode
 
  formatting per directory
+sql setup
  
  run-once with reloading macro
  all temp files in different location
@@ -709,9 +711,8 @@ make emacs behave same from daemon start vs commandline start
 		(message "frame-start--hook begin")		
 		(switch-to-buffer "init.el")
 		(end-of-buffer)
-		(call-interactively 'split-window-right)
+		(call-interactively 'split-window-right 1)
 		(switch-to-buffer "*shell*")
 		(message "frame-start-hook end"))
 
 (add-hook 'server-after-make-frame-hook #'efs/frame-start-hook)
-

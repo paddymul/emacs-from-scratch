@@ -15,26 +15,13 @@
   :config (progn
             (conda-env-initialize-interactive-shells)
             (conda-env-initialize-eshell)
-
             (setq conda-env-home-directory (expand-file-name "~/anaconda3/")
 		    conda-env-subdirectory "envs")
             (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
-
 ;            (conda-env-autoactivate-mode 'nil)
 ))
 
-;; (call-interactively 'ein:jupyter-server-start nil
-;; 		    (vector
-;; 		     ein:listen-to-jpy-daemon
-;; 		     "unused"))
-
-
-
-
-
-(defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
-(setq ein:jupyter-default-server-command ein:listen-to-jpy-daemon)
-(setq ein:jupyter-default-notebook-directory "unused")
+ (defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
 
 
 (use-package jupyter
@@ -44,21 +31,10 @@
   :init (eval-after-load 'jupyter-org-extensions ; conflicts with my helm config, I use <f2 #>
           '(unbind-key "C-c h" jupyter-org-interaction-mode-map)))
 
-;; (defun ein:after-load () )
+(use-package ein
+  :init (eval-after-load 'ein
+	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
 
-;(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")
-;(require 'ein)
-
-;(use-package ein)
-;; (use-package ein
-;;   :init (eval-after-load 'ein
-;; 	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
-
-	  ;; '(call-interactively 'ein:jupyter-server-start t
-	  ;; 	      (vector
-	  ;; 	       ein:listen-to-jpy-daemon
-	  ;; 	       (format "%s/.emacs.d/" (getenv "HOME"))))
-	  ;; ))
 
 (use-package lsp-mode
   :config
@@ -79,12 +55,6 @@
   :hook
   ((python-mode . lsp)
    (lsp-mode . lsp-enable-which-key-integration))
-  ;; :bind (:map evil-normal-state-map
-  ;;             ("gh" . lsp-describe-thing-at-point)
-  ;;             :map md/leader-map
-  ;;             ("Ff" . lsp-format-buffer)
-  ;;             ("FR" . lsp-rename))
-
 )
 
 (use-package lsp-ui
