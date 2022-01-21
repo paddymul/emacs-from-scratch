@@ -7,7 +7,7 @@
 (defvar efs/frame-transparency '(90 . 90))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-threshold (* 256 1000 1000))
 
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
@@ -22,6 +22,7 @@
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -130,28 +131,6 @@
     "tt" '(counsel-load-theme :which-key "choose theme")
     "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
 
-;; (use-package evil
-;;   :init
-;;   (setq evil-want-integration t)
-;;   (setq evil-want-keybinding nil)
-;;   (setq evil-want-C-u-scroll t)
-;;   (setq evil-want-C-i-jump nil)
-;;   :config
-;;   (evil-mode 1)
-;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-;;   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-;;   ;; Use visual line motions even outside of visual-line-mode buffers
-;;   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-;;   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-;;   (evil-set-initial-state 'messages-buffer-mode 'normal)
-;;   (evil-set-initial-state 'dashboard-mode 'normal))
-
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (evil-collection-init))
 
 (use-package command-log-mode
   :commands command-log-mode)
@@ -161,9 +140,6 @@
 
 (use-package all-the-icons)
 
-;; (use-package doom-modeline
-;;   :init (doom-modeline-mode 1)
-;;   :custom ((doom-modeline-height 15)))
 
 (use-package which-key
   :defer 0
@@ -574,11 +550,6 @@
   ;; Truncate buffer for performance
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
-  ;; Bind some useful keys for evil-mode
-  ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
-  ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
-  ;; (evil-normalize-keymaps)
-
   (setq eshell-history-size         10000
         eshell-buffer-maximum-lines 10000
         eshell-hist-ignoredups t
@@ -601,13 +572,7 @@
   :ensure nil
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump))
-  :custom ((dired-listing-switches "-agho --group-directories-first"))
-  :config
-  ;; (evil-collection-define-key 'normal 'dired-mode-map
-  ;;   "h" 'dired-single-up-directory
-  ;;   "l" 'dired-single-buffer)
-
-)
+  :custom ((dired-listing-switches "-agho --group-directories-first")))
 
 (use-package dired-single
   :commands (dired dired-jump))
@@ -625,13 +590,9 @@
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
-  :config
-  ;; (evil-collection-define-key 'normal 'dired-mode-map
-  ;;   "H" 'dired-hide-dotfiles-mode)
-)
+  :config)
 
 ;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
 (recentf-mode 1)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -648,12 +609,11 @@
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'" "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'" "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
  '(magit-git-executable "/usr/local/bin/git")
  '(package-selected-packages
-   '(ein default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+   '(cider default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
  '(typescript-indent-level 2))
-
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -674,16 +634,25 @@
 
 ; jupyter notebook daemon for datascience generally, test prep, and vizcomp
 ;  per directory  jupyter notebook not possible
+; reloading macro 
 
-
- org <-> mobile <-> mac
+ run-once
+ algo practice with jupyter
  slime/clojure setup
+
+
+ jupyter
+   change keymap to C-m...
+ 
+ org <-> mobile <-> mac
+
  learn smart paren mode
 
  formatting per directory
 sql setup
- 
- run-once with reloading macro
+
+
+
  all temp files in different location
 
  gui version of debug init
@@ -707,20 +676,15 @@ make emacs behave same from daemon start vs commandline start
   (hook-add-or-update
      shell-mode-hook fourth-shell-hook
      (message \"macro fourth rev 2\"))"
-  
   `(progn
      (if (fboundp ',fname)
 	 (progn 
 	   (message "defined fname of %s" ',fname)
 	   (remove-hook ',hook ',fname))
        (message "not found fname of %s" ',fname))
-     (defun ,fname ()
+     (defun ,fname (&rest argrest)
        ,@body)
      (add-hook ',hook ',fname)))
-
-(hook-add-or-update
- shell-mode-hook fourth-shell-hook
- (message "macro fourth rev 2"))
 
 (defun efs/start-hook ()
 		(message "start-hook begin")		
@@ -728,16 +692,24 @@ make emacs behave same from daemon start vs commandline start
 		(find-file  (expand-file-name "~/.emacs.d/personal/lsp-setup.el"))
 		(call-interactively 'shell)
 		(counsel--M-x-externs)
-		(message "start-hook end"))
-(add-hook 'emacs-startup-hook #'efs/start-hook)
-				
-(defun efs/frame-start-hook ()
+		(message "start-hook end")
 		(message "frame-start--hook begin")		
-		(switch-to-buffer "init.el")
+		(switch-to-buffer "lsp-setup.el")
 		(end-of-buffer)
-		(call-interactively 'split-window-right 1)
+		(call-interactively 'split-window-right )
 		(switch-to-buffer "*shell*")
-		(message "frame-start-hook end"))
+		(message "frame-start-hook end2")
 
-(add-hook 'server-after-make-frame-hook #'efs/frame-start-hook)
 
+)
+;;the above hook doesn't lend itself well to hook-add-or-update
+;;because you need to restart to trigger
+
+(add-hook 'emacs-startup-hook #'efs/start-hook)
+
+(use-package cider
+  :ensure t
+  :pin melpa-stable)
+(use-package clojure-mode
+  :ensure t
+  :pin melpa-stable)
