@@ -651,6 +651,7 @@
  formatting per directory
 sql setup
 
+lsp ts setup for 3 projects
 
 
  all temp files in different location
