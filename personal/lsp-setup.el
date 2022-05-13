@@ -36,26 +36,26 @@
 	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
 
 
-(use-package lsp-mode
-  :config
-  (setq lsp-idle-delay 0.2
-        lsp-enable-symbol-highlighting t
-        lsp-enable-snippet nil  ;; Not supported by company capf, which is the recommended company backend
-        lsp-pyls-plugins-flake8-enabled t)
-  (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)
+;; (use-package lsp-mode
+;;   :config
+;;   (setq lsp-idle-delay 0.2
+;;         lsp-enable-symbol-highlighting t
+;;         lsp-enable-snippet nil  ;; Not supported by company capf, which is the recommended company backend
+;;         lsp-pyls-plugins-flake8-enabled t)
+;;   (lsp-register-custom-settings
+;;    '(("pyls.plugins.pyls_mypy.enabled" t t)
+;;      ("pyls.plugins.pyls_mypy.live_mode" nil t)
+;;      ("pyls.plugins.pyls_black.enabled" t t)
+;;      ("pyls.plugins.pyls_isort.enabled" t t)
 
-     ;; Disable these as they're duplicated by flake8
-     ("pyls.plugins.pycodestyle.enabled" nil t)
-     ("pyls.plugins.mccabe.enabled" nil t)
-     ("pyls.plugins.pyflakes.enabled" nil t)))
-  :hook
-  ((python-mode . lsp)
-   (lsp-mode . lsp-enable-which-key-integration))
-)
+;;      ;; Disable these as they're duplicated by flake8
+;;      ("pyls.plugins.pycodestyle.enabled" nil t)
+;;      ("pyls.plugins.mccabe.enabled" nil t)
+;;      ("pyls.plugins.pyflakes.enabled" nil t)))
+;;   ;; :hook
+;;   ;; ((python-mode . lsp)
+;;   ;;  (lsp-mode . lsp-enable-which-key-integration))
+;; )
 
 (use-package lsp-ui
   :config (setq lsp-ui-sideline-show-hover t
@@ -115,33 +115,33 @@
 (define-key global-map [remap switch-to-buffer] #'helm-mini)
 
 
-(defun pm/lsp-mode-setup ()
-  (lsp-headerline-breadcrumb-mode)
-  (lsp-enable-which-key-integration)
-  ;;this seems to have a huge performance gain
-  (setq lsp-log-io nil))
+;; (defun pm/lsp-mode-setup ()
+;;   (lsp-headerline-breadcrumb-mode)
+;;   (lsp-enable-which-key-integration)
+;;   ;;this seems to have a huge performance gain
+;;   (setq lsp-log-io nil))
 
-;figure out wider larger which mdoe for lsp mode
-(use-package lsp-mode
-                                        ;  :straight t
-  :commands (lsp lsp-deferred)
-  :hook
-  (lsp-mode . pm/lsp-mode-setup)
-  ((python-mode . lsp))
-  ((typescript-mode js2-mode web-mode) . lsp)
-  :init
-  (setq lsp-keymap-prefix "s-l")
-  ;(setq lsp-keymap-prefix (kbd "M-l"))
-  )
+;; ;figure out wider larger which mdoe for lsp mode
+;; (use-package lsp-mode
+;;                                         ;  :straight t
+;;   :commands (lsp lsp-deferred)
+;;   :hook
+;;   (lsp-mode . pm/lsp-mode-setup)
+;;   ((python-mode . lsp))
+;;   ((typescript-mode js2-mode web-mode) . lsp)
+;;   :init
+;;   (setq lsp-keymap-prefix "s-l")
+;;   ;(setq lsp-keymap-prefix (kbd "M-l"))
+;;   )
 
 
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :commands lsp-ui-mode
-  :config
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  (setq lsp-ui-doc-position 'bottom))
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :commands lsp-ui-mode
+;;   :config
+;;   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+;;   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+;;   (setq lsp-ui-doc-position 'bottom))
 
 
 (use-package typescript-mode
@@ -196,13 +196,53 @@
   (setq dap-python-debugger 'debugpy)
   (dap-ui-mode 1))
 
-(use-package lsp-python-ms
+;; (use-package lsp-python-ms
+;;   :ensure t
+;;   :init (setq lsp-python-ms-auto-install-server t)
+;;   :hook (python-mode . (lambda ()
+;;                          (require 'lsp-python-ms)
+;;                          (require 'dap-python)
+;;                          (lsp))))
+
+(use-package flycheck
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (require 'dap-python)
-                         (lsp))))
+  :init
+  (global-flycheck-mode t))
+
+;; (use-package python
+;;   :mode ("\\.py" . python-mode)
+;;   :ensure t
+;;   :config
+;;   (flymake-mode) ;; <- This line makes the trick of disabling flymake in python mode!
+;;   (use-package elpy
+;;     :ensure t
+;;     :init
+;;     (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+;;     :config
+;;     (remove-hook 'elpy-modules 'elpy-module-flymake) ;; <- This removes flymake from elpy
+;;     (setq elpy-rpc-backend "jedi")
+;;     :bind (:map elpy-mode-map
+;;               ("M-." . elpy-goto-definition)
+;;               ("M-," . pop-tag-mark))
+;;   )
+;;   (elpy-enable)
+;; )
+
+;; (use-package company
+;;   :after lsp-mode
+;;   :hook (lsp-mode . company-mode)
+;;   :bind (:map company-active-map
+;;          ("<tab>" . company-complete-selection))
+;;         (:map lsp-mode-map
+;;          ("<tab>" . company-indent-or-complete-common))
+;;   :custom
+;;   (company-minimum-prefix-length 1)
+;;   (company-idle-delay 0.0))
+
+;; (use-package company-box
+;;   :hook (company-mode . company-box-mode))
+
+
 
 (setq gc-cons-threshold (* 256 1024 1024)
       read-process-output-max (* 1024 1024)

@@ -81,7 +81,8 @@
 (global-set-key (kbd "M-L") 'downcase-word)
 
 (global-set-key (kbd "C-S-k") 'paddy-kill-from-begining-of-line)
-(global-set-key (kbd "C-s-f") 'paddy-put-buffer-filename-in-killring)
+;(global-set-key (kbd "C-s-f") 'paddy-put-buffer-filename-in-killring)
+;(global-unset-key (kbd "C-s-f"))
 (global-set-key (kbd "s-C-x C-k") 'copy-region-as-kill)
 (global-set-key (kbd "s-M-f") 'find-file-at-point)
 (global-set-key (kbd "C-x C-M-f") 'find-file-other-window)
@@ -105,6 +106,6 @@
 ;;      ad-do-it
 ;;      )))
 
-
+;(define-key flyspell-mode-map (kbd "C->") 'flyspell-my-save-word)
 (provide 'keys)
 ;;; keys.el ends here

@@ -410,28 +410,28 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
-(defun efs/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-  :config
-  (lsp-enable-which-key-integration t))
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :hook (lsp-mode . efs/lsp-mode-setup)
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+;;   :config
+;;   (lsp-enable-which-key-integration t))
 
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
 
-(use-package lsp-treemacs
-  :after lsp)
+;; (use-package lsp-treemacs
+;;   :after lsp)
 
-(use-package lsp-ivy
-  :after lsp)
+;; (use-package lsp-ivy
+;;   :after lsp)
 
 (use-package dap-mode
   ;; Uncomment the config below if you want all UI panes to be hidden by default!
@@ -459,7 +459,7 @@
 
 (use-package python-mode
   :ensure t
-  :hook (python-mode . lsp-deferred)
+;  :hook (python-mode . lsp-deferred)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
   ;; (python-shell-interpreter "python3")
@@ -473,19 +473,6 @@
   :config
   (pyvenv-mode 1))
 
-(use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-         ("<tab>" . company-indent-or-complete-common))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode))
 
 (use-package projectile
   :diminish projectile-mode
@@ -608,8 +595,9 @@
  '(lsp-file-watch-ignored-directories
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'" "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'" "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
  '(magit-git-executable "/usr/local/bin/git")
+ '(org-html-doctype "html5")
  '(package-selected-packages
-   '(kotlin-mode default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+   '(default-text-scale spacemacs-theme dap-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
@@ -709,6 +697,7 @@ make emacs behave same from daemon start vs commandline start
 
 
 )
+(defalias 'yes-or-no-p 'y-or-n-p)
 ;;the above hook doesn't lend itself well to hook-add-or-update
 ;;because you need to restart to trigger
 

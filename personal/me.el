@@ -273,6 +273,20 @@ With a prefix argument, skip the balance check."
 
 
 
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+
+(dolist (hook '(org-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+
+(defun flyspell-my-save-word ()
+  (interactive)
+  (let ((current-location (point))
+         (word (flyspell-get-word)))
+    (when (consp word)    
+      (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
+
+
 
 ;(add-hook 'prelude-prog-mode-hook (lambda () (smartparens-mode -1)) t)
 ;(add-hook 'shell-mode-hook (lambda () (turn-off-show-smartparens-mode)) t)
