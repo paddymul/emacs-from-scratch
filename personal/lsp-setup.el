@@ -11,15 +11,15 @@
 ;(setq lsp-use-plists t)  -- causes errors I can't figure out
 
 
-(use-package conda
-  :config (progn
-            (conda-env-initialize-interactive-shells)
-            (conda-env-initialize-eshell)
-            (setq conda-env-home-directory (expand-file-name "~/anaconda3/")
-		    conda-env-subdirectory "envs")
-            (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
-;            (conda-env-autoactivate-mode 'nil)
-))
+;; (use-package conda
+;;   :config (progn
+;;             (conda-env-initialize-interactive-shells)
+;;             (conda-env-initialize-eshell)
+;;             (setq conda-env-home-directory (expand-file-name "~/anaconda3/")
+;; 		    conda-env-subdirectory "envs")
+;;             (custom-set-variables '(conda-anaconda-home (expand-file-name "~/anaconda3/")))
+;; ;            (conda-env-autoactivate-mode 'nil)
+;; ))
 
  (defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
 
@@ -31,9 +31,9 @@
   :init (eval-after-load 'jupyter-org-extensions ; conflicts with my helm config, I use <f2 #>
           '(unbind-key "C-c h" jupyter-org-interaction-mode-map)))
 
-(use-package ein
-  :init (eval-after-load 'ein
-	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
+;; (use-package ein
+;;   :init (eval-after-load 'ein
+;; 	  '(ein:jupyter-server-start ein:listen-to-jpy-daemon "unused")))
 
 
 ;; (use-package lsp-mode
@@ -57,24 +57,25 @@
 ;;   ;;  (lsp-mode . lsp-enable-which-key-integration))
 ;; )
 
-(use-package lsp-ui
-  :config (setq lsp-ui-sideline-show-hover t
-                lsp-ui-sideline-delay 0.5
-                lsp-ui-doc-delay 5
-                lsp-ui-sideline-ignore-duplicates t
-                lsp-ui-doc-position 'bottom
-                lsp-ui-doc-alignment 'frame
-                lsp-ui-doc-header nil
-                lsp-ui-doc-include-signature t
-                lsp-ui-doc-use-childframe t)
-  :commands lsp-ui-mode
-  ;; :bind (:map evil-normal-state-map
-  ;;             ("gd" . lsp-ui-peek-find-definitions)
-  ;;             ("gr" . lsp-ui-peek-find-references)
-  ;;             :map md/leader-map
-  ;;             ("Ni" . lsp-ui-imenu))
+;; (use-package lsp-ui
+;;   :config (setq lsp-ui-sideline-show-hover t
+;;                 lsp-ui-sideline-delay 0.5
+;;                 lsp-ui-doc-delay 5
+;;                 lsp-ui-sideline-ignore-duplicates t
+;;                 lsp-ui-doc-position 'bottom
+;;                 lsp-ui-doc-alignment 'frame
+;;                 lsp-ui-doc-header nil
+;;                 lsp-ui-doc-include-signature t
+;;                 lsp-ui-doc-use-childframe t)
+;;   :commands lsp-ui-mode
+;;   ;; :bind (:map evil-normal-state-map
+;;   ;;             ("gd" . lsp-ui-peek-find-definitions)
+;;   ;;             ("gr" . lsp-ui-peek-find-references)
+;;   ;;             :map md/leader-map
+;;   ;;             ("Ni" . lsp-ui-imenu))
 
-)
+;; )
+
 
 (use-package pyvenv
   :demand t
@@ -166,12 +167,12 @@
   :config
   (setq prettier-js-show-errors nil))
 
-(with-eval-after-load 'lsp-mode
-  ;(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)                                      
-  (require 'dap-cpptools)
-  (require 'dap-chrome)
-;  (yas-global-mode)
-)
+;; (with-eval-after-load 'lsp-mode
+;;   ;(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)                                      
+;;   (require 'dap-cpptools)
+;;   (require 'dap-chrome)
+;; ;  (yas-global-mode)
+;; )
 
 
 ;setting company-idle-delay to 1.5 makes it much less likel that slow

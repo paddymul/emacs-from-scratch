@@ -252,11 +252,11 @@ With a prefix argument, skip the balance check."
         (ter (gethash "term" myGraphicModeHash)))
     (progn
       (select-frame frame)
-      (when (or gui ter) 
+      (when (or gui ter)
         (progn
           ;; setup the smart-mode-line and its theme
-          
-          
+
+
           (if (display-graphic-p)
               (progn
                 (puthash "gui" nil myGraphicModeHash)
@@ -283,12 +283,29 @@ With a prefix argument, skip the balance check."
   (interactive)
   (let ((current-location (point))
          (word (flyspell-get-word)))
-    (when (consp word)    
+    (when (consp word)
       (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
 
 
-
+(setq explicit-shell-file-name "/bin/zsh")
 ;(add-hook 'prelude-prog-mode-hook (lambda () (smartparens-mode -1)) t)
 ;(add-hook 'shell-mode-hook (lambda () (turn-off-show-smartparens-mode)) t)
+
+;(defun dotspacemacs/user-config ()
+(setq-default typescript-indent-level 4)
+
+
+
+
+(make-directory "~/.emacs_backups/" t)
+(make-directory "~/.emacs_autosave/" t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs_autosave/" t)))
+(setq backup-directory-alist '(("." . "~/.emacs_backups/")))
+(setq backup-by-copying t)
+(setq sentence-end-double-space nil)
+(setq show-trailing-whitespace t)
+
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 (provide 'me)
 ;;; me.el ends here

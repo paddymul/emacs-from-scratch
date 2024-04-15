@@ -5,6 +5,126 @@
 
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
+(setq-default explicit-shell-file-name "/opt/homebrew/bin/zsh")
+
+(progn
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)   
+
+    (setq backup-directory-alist
+          `((".*" . ,temporary-file-directory)))
+    (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
+    )
+
+
+
+
+(require 'python)
+(defvar python-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; Movement
+    (define-key map [remap backward-sentence] #'python-nav-backward-block)
+    (define-key map [remap forward-sentence] #'python-nav-forward-block)
+    (define-key map [remap backward-up-list] #'python-nav-backward-up-list)
+    (define-key map [remap up-list] #'python-nav-up-list)
+    (define-key map [remap mark-defun] #'python-mark-defun)
+    (define-key map "\C-c\C-j" #'imenu)
+    ;; Indent specific
+    (define-key map "\177" #'python-indent-dedent-line-backspace)
+    (define-key map (kbd "<backtab>") #'python-indent-dedent-line)
+    (define-key map "\C-c<" #'python-indent-shift-left)
+    (define-key map "\C-c>" #'python-indent-shift-right)
+    ;; Skeletons
+    (define-key map "\C-c\C-tc" #'python-skeleton-class)
+    (define-key map "\C-c\C-td" #'python-skeleton-def)
+    (define-key map "\C-c\C-tf" #'python-skeleton-for)
+    (define-key map "\C-c\C-ti" #'python-skeleton-if)
+    (define-key map "\C-c\C-tm" #'python-skeleton-import)
+    (define-key map "\C-c\C-tt" #'python-skeleton-try)
+    (define-key map "\C-c\C-tw" #'python-skeleton-while)
+    ;; Shell interaction
+    (define-key map "\C-c\C-p" #'run-python)
+    (define-key map "\C-c\C-s" #'python-shell-send-string)
+    (define-key map "\C-c\C-e" #'python-shell-send-statement)
+    (define-key map "\C-c\C-r" #'python-shell-send-region)
+    (define-key map "\C-\M-x"  #'python-shell-send-defun)
+    (define-key map "\C-c\C-c" #'python-shell-send-buffer)
+    (define-key map "\C-c\C-l" #'python-shell-send-file)
+    (define-key map "\C-c\C-z" #'python-shell-switch-to-shell)
+    ;; Some util commands
+    (define-key map "\C-c\C-v" #'python-check)
+    (define-key map "\C-c\C-f" #'python-eldoc-at-point)
+    (define-key map "\C-c\C-d" #'python-describe-at-point)
+    ;; Import management
+    (define-key map "\C-c\C-ia" #'python-add-import)
+    (define-key map "\C-c\C-if" #'python-fix-imports)
+    (define-key map "\C-c\C-ir" #'python-remove-import)
+    (define-key map "\C-c\C-is" #'python-sort-imports)
+    ;; Utilities
+    (substitute-key-definition #'complete-symbol #'completion-at-point
+                               map global-map)
+    (easy-menu-define python-menu map "Python Mode menu"
+      '("Python"
+        :help "Python-specific Features"
+        ["Shift region left" python-indent-shift-left :active mark-active
+         :help "Shift region left by a single indentation step"]
+        ["Shift region right" python-indent-shift-right :active mark-active
+         :help "Shift region right by a single indentation step"]
+        "-"
+        ["Start of def/class" beginning-of-defun
+         :help "Go to start of outermost definition around point"]
+        ["End of def/class" end-of-defun
+         :help "Go to end of definition around point"]
+        ["Mark def/class" mark-defun
+         :help "Mark outermost definition around point"]
+        ["Jump to def/class" imenu
+         :help "Jump to a class or function definition"]
+        "--"
+        ("Skeletons")
+        "---"
+        ["Start interpreter" run-python
+         :help "Run inferior Python process in a separate buffer"]
+        ["Switch to shell" python-shell-switch-to-shell
+         :help "Switch to running inferior Python process"]
+        ["Eval string" python-shell-send-string
+         :help "Eval string in inferior Python session"]
+        ["Eval buffer" python-shell-send-buffer
+         :help "Eval buffer in inferior Python session"]
+        ["Eval statement" python-shell-send-statement
+         :help "Eval statement in inferior Python session"]
+        ["Eval region" python-shell-send-region
+         :help "Eval region in inferior Python session"]
+        ["Eval defun" python-shell-send-defun
+         :help "Eval defun in inferior Python session"]
+        ["Eval file" python-shell-send-file
+         :help "Eval file in inferior Python session"]
+        ["Debugger" pdb :help "Run pdb under GUD"]
+        "----"
+        ["Check file" python-check
+         :help "Check file for errors"]
+        ["Help on symbol" python-eldoc-at-point
+         :help "Get help on symbol at point"]
+        ["Complete symbol" completion-at-point
+         :help "Complete symbol before point"]
+        "-----"
+        ["Add import" python-add-import
+         :help "Add an import statement to the top of this buffer"]
+        ["Remove import" python-remove-import
+         :help "Remove an import statement from the top of this buffer"]
+        ["Sort imports" python-sort-imports
+         :help "Sort the import statements at the top of this buffer"]
+        ["Fix imports" python-fix-imports
+         :help "Add missing imports and remove unused ones from the current buffer"]
+        ))
+    map)
+  "Keymap for `python-mode'.")
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 256 1000 1000))
@@ -166,10 +286,10 @@
   :config
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :after ivy
-  :init
-  (ivy-rich-mode 1))
+;; (use-package ivy-rich
+;;   :after ivy
+;;   :init
+;;   (ivy-rich-mode 1))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -250,7 +370,7 @@
 (use-package org
   :pin org
   :commands (org-capture org-agenda)
-  :hook (org-mode . efs/org-mode-setup)
+;  :hook (org-mode . efs/org-mode-setup)
   :config
   (setq org-ellipsis " ▾")
 
@@ -384,21 +504,25 @@
 (use-package visual-fill-column
   :hook (org-mode . efs/org-mode-visual-fill))
 
-(with-eval-after-load 'org
-  (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((emacs-lisp . t)
-      (python . t)))
+;; (with-eval-after-load 'org
+;;   (org-babel-do-load-languages
+;;       'org-babel-load-languages
+;;       '((emacs-lisp . t)
+;;       (python . t)))
 
-  (push '("conf-unix" . conf-unix) org-src-lang-modes))
+;;   (push '("conf-unix" . conf-unix) org-src-lang-modes))
+
+
 
 (with-eval-after-load 'org
   ;; This is needed as of Org 9.2
   (require 'org-tempo)
 
-  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python")))
+  ;; (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  ;; (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  ;; (add-to-list 'org-structure-template-alist '("py" . "src python"))
+
+)
 
 ;; Automatically tangle our Emacs.org config file when we save it
 (defun efs/org-babel-tangle-config ()
@@ -408,30 +532,30 @@
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+;(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
-;; (defun efs/lsp-mode-setup ()
-;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-;;   (lsp-headerline-breadcrumb-mode))
+(defun efs/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
 
-;; (use-package lsp-mode
-;;   :commands (lsp lsp-deferred)
-;;   :hook (lsp-mode . efs/lsp-mode-setup)
-;;   :init
-;;   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-;;   :config
-;;   (lsp-enable-which-key-integration t))
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+  :config
+  (lsp-enable-which-key-integration t))
 
-;; (use-package lsp-ui
-;;   :hook (lsp-mode . lsp-ui-mode)
-;;   :custom
-;;   (lsp-ui-doc-position 'bottom))
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
 
-;; (use-package lsp-treemacs
-;;   :after lsp)
+(use-package lsp-treemacs
+  :after lsp)
 
-;; (use-package lsp-ivy
-;;   :after lsp)
+(use-package lsp-ivy
+  :after lsp)
 
 (use-package dap-mode
   ;; Uncomment the config below if you want all UI panes to be hidden by default!
@@ -453,20 +577,20 @@
 
 (use-package typescript-mode
   :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
+;  :hook (typescript-mode . lsp-deferred)
   :config
   (setq typescript-indent-level 2))
 
-(use-package python-mode
-  :ensure t
-;  :hook (python-mode . lsp-deferred)
-  :custom
-  ;; NOTE: Set these if Python 3 is called "python3" on your system!
-  ;; (python-shell-interpreter "python3")
-  ;; (dap-python-executable "python3")
-  (dap-python-debugger 'debugpy)
-  :config
-  (require 'dap-python))
+;; (use-package python-mode
+;;   :ensure t
+;; ;  :hook (python-mode . lsp-deferred)
+;;   :custom
+;;   ;; NOTE: Set these if Python 3 is called "python3" on your system!
+;;   ;; (python-shell-interpreter "python3")
+;;   ;; (dap-python-executable "python3")
+;;   (dap-python-debugger 'debugpy)
+;;   :config
+;;   (require 'dap-python))
 
 (use-package pyvenv
   :after python-mode
@@ -474,10 +598,11 @@
   (pyvenv-mode 1))
 
 
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
+;  :custom ((projectile-completion-system 'ivy))
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
@@ -586,9 +711,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(conda-anaconda-home (expand-file-name "~/anaconda3/"))
+ '(conda-anaconda-home "/home/paddy/anaconda3/")
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+ '(dired-listing-switches "-la --group-directories-first" nil nil "Customized with use-package dired")
  '(flyspell-delay 0.75)
  '(global-flycheck-mode nil)
  '(kill-read-only-ok t)
@@ -597,11 +723,11 @@
  '(magit-git-executable "/usr/local/bin/git")
  '(org-html-doctype "html5")
  '(package-selected-packages
-   '(default-text-scale spacemacs-theme dap-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+   '(svg-lib default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2))
+ '(typescript-indent-level 2 t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -689,7 +815,8 @@ make emacs behave same from daemon start vs commandline start
 		(counsel--M-x-externs)
 		(message "start-hook end")
 		(message "frame-start--hook begin")		
-		(switch-to-buffer "lsp-setup.el")
+		;(switch-to-buffer "lsp-setup.el")
+		(switch-to-buffer "init.el")
 		(end-of-buffer)
 		(call-interactively 'split-window-right )
 		(switch-to-buffer "*shell*")
@@ -709,3 +836,13 @@ make emacs behave same from daemon start vs commandline start
 (use-package clojure-mode
   :ensure t
   :pin melpa-stable)
+
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(typescript-mode . ("/usr/local/bin/typescript-language-server" "--stdio"))))
+
+
+ (add-hook 'typescript-mode-hook 'eglot-ensure)
+(setq insert-directory-program "gls" dired-use-ls-dired t)
+(setq dired-listing-switches "-al --group-directories-first")
