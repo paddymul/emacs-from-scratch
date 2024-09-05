@@ -1,3 +1,4 @@
+
 ;;;  package -- summary
 
 ;;; Commentary:
@@ -5,7 +6,13 @@
 
 (print emacs-version)
 
+
+;(;setq mac-command-modifier 'nil)
 (setq mac-command-modifier 'meta)
+;use this to determine if ergodox plugged in
+					; system_profiler SPUSBDataType | grep ErgoDox
+
+;system_profiler SPPowerDataType | grep Wattage
 (setq mac-option-modifier 'super)
 (setq prelude-super-keybindings nil)
 
@@ -108,4 +115,5 @@
 
 ;(define-key flyspell-mode-map (kbd "C->") 'flyspell-my-save-word)
 (provide 'keys)
+
 ;;; keys.el ends here

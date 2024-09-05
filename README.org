@@ -182,3 +182,12 @@ You can use PowerToys' Keyboard Manager to easily remap the keys. Download the t
 *macOS*
 
 Thankfully Apple saw fit to make this a first-class option in macOS.  You can follow the [[https://support.apple.com/guide/mac-help/change-the-behavior-of-the-modifier-keys-mchlp1011/mac][official documentation]] for your version of macOS to find the Modifier Keys settings and then switch Caps Lock to Control on that page.
+
+* paddy additions
+** bootstrap
+
+#+begin_src
+brew tap homebrew/cask-fonts         # You only need to do this once!
+brew install --cask font-fira-code
+brew install font-inconsolata font-cantarell coreutils ispell
+#+end_src

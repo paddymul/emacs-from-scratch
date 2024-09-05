@@ -1,13 +1,10 @@
 (require 'package)
 (require 'use-package)
 (require 'lsp-ui-imenu)
-(custom-set-variables
- '(conda-anaconda-home "/home/paddy/anaconda3/"))
-(setq conda-env-home-directory (expand-file-name "~/anaconda3/"))
 (setq
       read-process-output-max (* 1024 1024))
 
-(setq lsp-log-io nil)
+;(setq lsp-log-io nil)
 ;(setq lsp-use-plists t)  -- causes errors I can't figure out
 
 
@@ -21,7 +18,7 @@
 ;; ;            (conda-env-autoactivate-mode 'nil)
 ;; ))
 
- (defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
+; (defvar ein:listen-to-jpy-daemon (format "%s/.emacs.d/jpy_scripts/jupyter-to-be-called-by-emacs.sh" (getenv "HOME")))
 
 
 (use-package jupyter

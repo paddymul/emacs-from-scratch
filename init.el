@@ -22,8 +22,8 @@
     (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
     )
-
-
+(setq create-lockfiles nil)
+(setq ispell-program-name "/opt/homebrew/bin/ispell")
 
 
 (require 'python)
@@ -257,6 +257,10 @@
 
 (use-package doom-themes
   :init (load-theme 'doom-palenight t))
+
+;(use-package doom-themes
+;  :init (load-theme 'doom-opera t))
+
 
 (use-package all-the-icons)
 
@@ -534,69 +538,70 @@
 
 ;(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
-(defun efs/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
+;; (comment
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
 
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-  :config
-  (lsp-enable-which-key-integration t))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
-
-(use-package lsp-treemacs
-  :after lsp)
-
-(use-package lsp-ivy
-  :after lsp)
-
-(use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  :commands dap-debug
-  :config
-  ;; Set up Node debugging
-  (require 'dap-node)
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
-
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-;  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
-
-;; (use-package python-mode
-;;   :ensure t
-;; ;  :hook (python-mode . lsp-deferred)
-;;   :custom
-;;   ;; NOTE: Set these if Python 3 is called "python3" on your system!
-;;   ;; (python-shell-interpreter "python3")
-;;   ;; (dap-python-executable "python3")
-;;   (dap-python-debugger 'debugpy)
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :hook (lsp-mode . efs/lsp-mode-setup)
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
 ;;   :config
-;;   (require 'dap-python))
+;;   (lsp-enable-which-key-integration t))
 
-(use-package pyvenv
-  :after python-mode
-  :config
-  (pyvenv-mode 1))
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
 
+;; (use-package lsp-treemacs
+;;   :after lsp)
+
+;; (use-package lsp-ivy
+;;   :after lsp)
+
+;; (use-package dap-mode
+;;   ;; Uncomment the config below if you want all UI panes to be hidden by default!
+;;   ;; :custom
+;;   ;; (lsp-enable-dap-auto-configure nil)
+;;   ;; :config
+;;   ;; (dap-ui-mode 1)
+;;   :commands dap-debug
+;;   :config
+;;   ;; Set up Node debugging
+;;   (require 'dap-node)
+;;   (dap-node-setup) ;; Automatically installs Node debug adapter if needed
+
+;;   ;; Bind `C-c l d` to `dap-hydra` for easy access
+;;   (general-define-key
+;;     :keymaps 'lsp-mode-map
+;;     :prefix lsp-keymap-prefix
+;;     "d" '(dap-hydra t :wk "debugger")))
+
+;; (use-package typescript-mode
+;;   :mode "\\.ts\\'"
+;; ;  :hook (typescript-mode . lsp-deferred)
+;;   :config
+;;   (setq typescript-indent-level 2))
+
+;; ;; (use-package python-mode
+;; ;;   :ensure t
+;; ;; ;  :hook (python-mode . lsp-deferred)
+;; ;;   :custom
+;; ;;   ;; NOTE: Set these if Python 3 is called "python3" on your system!
+;; ;;   ;; (python-shell-interpreter "python3")
+;; ;;   ;; (dap-python-executable "python3")
+;; ;;   (dap-python-debugger 'debugpy)
+;; ;;   :config
+;; ;;   (require 'dap-python))
+
+;; (use-package pyvenv
+;;   :after python-mode
+;;   :config
+;;   (pyvenv-mode 1))
+;; )
 
 
 (use-package projectile
@@ -718,23 +723,26 @@
  '(flyspell-delay 0.75)
  '(global-flycheck-mode nil)
  '(kill-read-only-ok t)
+ '(lsp-clients-typescript-npm-location "/opt/homebrew/bin/npm")
  '(lsp-file-watch-ignored-directories
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'" "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'" "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
+ '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
  '(magit-git-executable "/usr/local/bin/git")
  '(org-html-doctype "html5")
  '(package-selected-packages
-   '(svg-lib default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+   '(default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2 t))
+ '(typescript-indent-level 2))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(ivy-current-match ((t (:extend t :background "dark green"))))
+ '(mode-line ((t (:background "navy" :foreground "#A6Accd" :box nil)))))
 
     (defun load-directory (dir)
       (let ((load-it (lambda (f)
@@ -828,7 +836,7 @@ make emacs behave same from daemon start vs commandline start
 ;;the above hook doesn't lend itself well to hook-add-or-update
 ;;because you need to restart to trigger
 
-(add-hook 'emacs-startup-hook #'efs/start-hook)
+;(add-hook 'emacs-startup-hook #'efs/start-hook)
 
 (use-package cider
   :ensure t
@@ -838,11 +846,21 @@ make emacs behave same from daemon start vs commandline start
   :pin melpa-stable)
 
 
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '(typescript-mode . ("/usr/local/bin/typescript-language-server" "--stdio"))))
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(typescript-mode . ("/usr/local/bin/typescript-language-server" "--stdio"))))
 
 
- (add-hook 'typescript-mode-hook 'eglot-ensure)
-(setq insert-directory-program "gls" dired-use-ls-dired t)
+; (add-hook 'typescript-mode-hook 'eglot-ensure)
+
+
+(when (string= system-type "darwin")
+  (progn
+    (add-to-list 'exec-path "/opt/homebrew/bin/")
+    (setq dired-use-ls-dired t
+          insert-directory-program "/opt/homebrew/bin/gls"
+          dired-listing-switches "-aBhl --group-directories-first")))
+
 (setq dired-listing-switches "-al --group-directories-first")
+(add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
+;exec-path
