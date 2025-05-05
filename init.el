@@ -853,6 +853,22 @@ make emacs behave same from daemon start vs commandline start
 
 ; (add-hook 'typescript-mode-hook 'eglot-ensure)
 
+(setopt comint-process-echoes t) ; makes comint mode remove the last command run from the output
+
+
+;  from https://blog.lambda.cx/posts/emacs-align-columns/
+; https://whatacold.io/blog/2019-07-20-understanding-align-regexp-of-emacs/
+
+;this is good, and an improvement,  I'd like to have it right align numbers
+(defun align-non-space (BEG END)
+  "Align non-space columns in region BEG END."
+  (interactive "r")
+  (let ((indent-tabs-mode nil)) ;align with spaces
+    (align-regexp BEG END "\\(\\s-*\\)\\S-+" -1 1 t)))
+
+
+(global-set-key (kbd "C-M-=") 'align-non-space)
+
 
 (when (string= system-type "darwin")
   (progn
