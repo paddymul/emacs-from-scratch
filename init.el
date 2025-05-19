@@ -3,6 +3,10 @@
 
 ;; You will most likely need to adjust this font size for your system!
 
+
+(add-to-list 'load-path  "/Users/paddy/.emacs.d/personal")
+(defmacro comment (&rest a))
+(require 'me)
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 (setq-default explicit-shell-file-name "/opt/homebrew/bin/zsh")
@@ -718,23 +722,39 @@
  ;; If there is more than one, they won't work right.
  '(conda-anaconda-home "/home/paddy/anaconda3/")
  '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
+     default))
  '(dired-listing-switches "-la --group-directories-first" nil nil "Customized with use-package dired")
  '(flyspell-delay 0.75)
  '(global-flycheck-mode nil)
  '(kill-read-only-ok t)
  '(lsp-clients-typescript-npm-location "/opt/homebrew/bin/npm")
  '(lsp-file-watch-ignored-directories
-   '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'" "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'" "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
+   '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'"
+     "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'"
+     "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'"
+     "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'"
+     "[/\\\\]node_modules" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'"
+     "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'"
+     "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'"
+     "[/\\\\]\\.metals\\'" "[/\\\\]target\\'"
+     "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'"
+     "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'"
+     "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'"
+     "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'"
+     "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'"
+     "[/\\\\]\\.cpcache\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'"
+     "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.jest\\'"
+     "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'"
+     "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
  '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
  '(magit-git-executable "/usr/local/bin/git")
  '(org-html-doctype "html5")
- '(package-selected-packages
-   '(default-text-scale spacemacs-theme lsp-python-ms dap-mode lsp-treemacs lsp-ui lsp-mode yasnippet-snippets helm-xref prettier-js dockerfile-mode use-package typescript-mode exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash browse-kill-ring beacon anzu ace-window))
+ '(package-selected-packages nil)
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2))
+ '(typescript-indent-level 2 t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -749,48 +769,47 @@
 		       (load-file (concat (file-name-as-directory dir) f)))
 		     ))
 	(mapc load-it (directory-files dir nil "\\.el$"))))
-    (load-directory "~/.emacs.d/personal")
 
 
-(comment
+;; (comment
 
-; jupyter notebook daemon for datascience generally, test prep, and vizcomp
-;  per directory  jupyter notebook not possible
-; reloading macro 
+;; ; jupyter notebook daemon for datascience generally, test prep, and vizcomp
+;; ;  per directory  jupyter notebook not possible
+;; ; reloading macro 
 
- run-once
- algo practice with jupyter
- slime/clojure setup
+;;  run-once
+;;  algo practice with jupyter
+;;  slime/clojure setup
 
 
- jupyter
-   change keymap to C-m...
+;;  jupyter
+;;    change keymap to C-m...
  
- org <-> mobile <-> mac
+;;  org <-> mobile <-> mac
 
- learn smart paren mode
+;;  learn smart paren mode
 
- formatting per directory -- for projects
-sql setup
+;;  formatting per directory -- for projects
+;; sql setup
 
-lsp ts setup for 3 projects
-
-
-all temp files in different location
-make a missing temp file not bork startup
-turn off auto-update on startup, or at least ask after everything else is run
-
-toggle dired hide-show hidden files
-toggle dired opening new windows
+;; lsp ts setup for 3 projects
 
 
- gui version of debug init
+;; all temp files in different location
+;; make a missing temp file not bork startup
+;; turn off auto-update on startup, or at least ask after everything else is run
 
- hook to prevent saving syntax error in .el files
+;; toggle dired hide-show hidden files
+;; toggle dired opening new windows
 
-make emacs behave same from daemon start vs commandline start
+
+;;  gui version of debug init
+
+;;  hook to prevent saving syntax error in .el files
+
+;; make emacs behave same from daemon start vs commandline start
  
- )
+;;  )
 
 
 (add-to-list 'safe-local-variable-values '(conda-project-env-path . "base"))
@@ -860,14 +879,14 @@ make emacs behave same from daemon start vs commandline start
 ; https://whatacold.io/blog/2019-07-20-understanding-align-regexp-of-emacs/
 
 ;this is good, and an improvement,  I'd like to have it right align numbers
-(defun align-non-space (BEG END)
+(defun paddy-table-align (BEG END)
   "Align non-space columns in region BEG END."
   (interactive "r")
   (let ((indent-tabs-mode nil)) ;align with spaces
     (align-regexp BEG END "\\(\\s-*\\)\\S-+" -1 1 t)))
 
 
-(global-set-key (kbd "C-M-=") 'align-non-space)
+(global-set-key (kbd "C-M-=") 'paddy-table-align)
 
 
 (when (string= system-type "darwin")
@@ -878,5 +897,7 @@ make emacs behave same from daemon start vs commandline start
           dired-listing-switches "-aBhl --group-directories-first")))
 
 (setq dired-listing-switches "-al --group-directories-first")
+
+
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
 ;exec-path

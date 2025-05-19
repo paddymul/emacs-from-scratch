@@ -7,6 +7,7 @@
 ;;; Code:
 
 
+
 (defun sp-kill-region (beg end)
   "Kill the text between point and mark, like `kill-region'.
 
@@ -42,7 +43,6 @@ With a prefix argument, skip the balance check."
 (require 'term)
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
 
 
 (setq display-buffer-fallback-action
@@ -157,6 +157,9 @@ With a prefix argument, skip the balance check."
       (command-execute 'prompt-for-shell-name)
     (shell)))
 
+					; bind cycle through shells to C-M-;
+
+
 (defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph and makes it into a single line of text."
   (interactive (progn (barf-if-buffer-read-only) '(t)))
@@ -237,7 +240,6 @@ With a prefix argument, skip the balance check."
             (setq graphics-setup-has-not-run nil)    
             )
           )
-      
       )
   )
 ;(graphics-setup)
@@ -255,8 +257,6 @@ With a prefix argument, skip the balance check."
       (when (or gui ter)
         (progn
           ;; setup the smart-mode-line and its theme
-
-
           (if (display-graphic-p)
               (progn
                 (puthash "gui" nil myGraphicModeHash)
@@ -307,5 +307,9 @@ With a prefix argument, skip the balance check."
 
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+(message "about to require paddy-progrmaming-modes")
+;
+(require 'paddy-programming-modes)
+(require 'keys)
 (provide 'me)
 ;;; me.el ends here
