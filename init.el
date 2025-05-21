@@ -6,7 +6,7 @@
 
 (add-to-list 'load-path  "/Users/paddy/.emacs.d/personal")
 (defmacro comment (&rest a))
-(require 'me)
+
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 (setq-default explicit-shell-file-name "/opt/homebrew/bin/zsh")
@@ -898,6 +898,6 @@
 
 (setq dired-listing-switches "-al --group-directories-first")
 
-
+(require 'me)
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
 ;exec-path

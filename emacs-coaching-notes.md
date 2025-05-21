@@ -124,4 +124,32 @@ What are the common emacs key bindings for these eglot commands
 
 M-. goto definition
 M-, go back
+M-? find usages other window
+C-; quick fix modal popup
 
+## Problem with where require 'me is
+
+if it's at the bottom of init.el I get zsh as expected
+at the top, I get bash.
+
+I want zsh because that's setup
+
+
+## convience command
+
+Ok, I have a bunch of paths around, how to normalize that
+
+I want a command that runs npm install
+
+
+
+## How to jump to line number
+
+
+paddy@Paddys-Air buckaroo % uv run mypy buckaroo/pluggable_analysis_framework/analysis_management.py
+buckaroo/pluggable_analysis_framework/analysis_management.py:256: error: Missing positional argument "ordered_objs" in call to "produce_summary_df"  [call-arg]
+Found 1 error in 1 file (checked 1 source file)
+
+How do I got staright to to line 256?
+
+Should I be running this in compile mode?
