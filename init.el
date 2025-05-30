@@ -6,13 +6,6 @@
 
 (add-to-list 'load-path  "/Users/paddy/.emacs.d/personal")
 
-(use-package consult
-  :ensure t
-  :bind (("M-s M-g" . consult-grep)
-         ("M-s M-s" . consult-outline))
-)
-
-(setq completion-styles '(substring basic))
 
 (defmacro comment (&rest a))
 
@@ -651,7 +644,7 @@
      "[/\\\\]node_modules\\'" "[/\\\\]\\.direnv\\'"
      "[/\\\\\\\\]\\\\.jest\\\\'" "[/\\\\\\\\]node_modules\\\\'"))
  '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
- '(magit-git-executable "/usr/local/bin/git")
+ '(magit-git-executable "/opt/homebrew/bin/git")
  '(org-html-doctype "html5")
  '(package-selected-packages
    '(all-the-icons-dired cider command-log-mode conda consult corfu
@@ -769,25 +762,8 @@
 
 )
 (defalias 'yes-or-no-p 'y-or-n-p)
-;;the above hook doesn't lend itself well to hook-add-or-update
-;;because you need to restart to trigger
-
-;(add-hook 'emacs-startup-hook #'efs/start-hook)
-
-;; (use-package cider
-;;   :ensure t
-;;   :pin melpa-stable)
-(use-package clojure-mode
-  :ensure t
-  :pin melpa-stable)
 
 
-;; (with-eval-after-load 'eglot
-;;   (add-to-list 'eglot-server-programs
-;;                '(typescript-mode . ("/usr/local/bin/typescript-language-server" "--stdio"))))
-
-
-; (add-hook 'typescript-mode-hook 'eglot-ensure)
 
 (setopt comint-process-echoes t) ; makes comint mode remove the last command run from the output
 
@@ -814,6 +790,16 @@
           dired-listing-switches "-aBhl --group-directories-first")))
 
 (setq dired-listing-switches "-al --group-directories-first")
+
+
+(use-package consult
+  :ensure t
+  :bind (("M-s M-g" . consult-grep)
+         ("M-s M-s" . consult-outline))
+)
+
+(setq completion-styles '(substring basic))
+
 
 (require 'me)
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
