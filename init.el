@@ -5,6 +5,15 @@
 
 
 (add-to-list 'load-path  "/Users/paddy/.emacs.d/personal")
+
+(use-package consult
+  :ensure t
+  :bind (("M-s M-g" . consult-grep)
+         ("M-s M-s" . consult-outline))
+)
+
+(setq completion-styles '(substring basic))
+
 (defmacro comment (&rest a))
 
 ;; Make frame transparency overridable
@@ -30,105 +39,6 @@
 (setq ispell-program-name "/opt/homebrew/bin/ispell")
 
 
-(require 'python)
-(defvar python-mode-map
-  (let ((map (make-sparse-keymap)))
-    ;; Movement
-    (define-key map [remap backward-sentence] #'python-nav-backward-block)
-    (define-key map [remap forward-sentence] #'python-nav-forward-block)
-    (define-key map [remap backward-up-list] #'python-nav-backward-up-list)
-    (define-key map [remap up-list] #'python-nav-up-list)
-    (define-key map [remap mark-defun] #'python-mark-defun)
-    (define-key map "\C-c\C-j" #'imenu)
-    ;; Indent specific
-    (define-key map "\177" #'python-indent-dedent-line-backspace)
-    (define-key map (kbd "<backtab>") #'python-indent-dedent-line)
-    (define-key map "\C-c<" #'python-indent-shift-left)
-    (define-key map "\C-c>" #'python-indent-shift-right)
-    ;; Skeletons
-    (define-key map "\C-c\C-tc" #'python-skeleton-class)
-    (define-key map "\C-c\C-td" #'python-skeleton-def)
-    (define-key map "\C-c\C-tf" #'python-skeleton-for)
-    (define-key map "\C-c\C-ti" #'python-skeleton-if)
-    (define-key map "\C-c\C-tm" #'python-skeleton-import)
-    (define-key map "\C-c\C-tt" #'python-skeleton-try)
-    (define-key map "\C-c\C-tw" #'python-skeleton-while)
-    ;; Shell interaction
-    (define-key map "\C-c\C-p" #'run-python)
-    (define-key map "\C-c\C-s" #'python-shell-send-string)
-    (define-key map "\C-c\C-e" #'python-shell-send-statement)
-    (define-key map "\C-c\C-r" #'python-shell-send-region)
-    (define-key map "\C-\M-x"  #'python-shell-send-defun)
-    (define-key map "\C-c\C-c" #'python-shell-send-buffer)
-    (define-key map "\C-c\C-l" #'python-shell-send-file)
-    (define-key map "\C-c\C-z" #'python-shell-switch-to-shell)
-    ;; Some util commands
-    (define-key map "\C-c\C-v" #'python-check)
-    (define-key map "\C-c\C-f" #'python-eldoc-at-point)
-    (define-key map "\C-c\C-d" #'python-describe-at-point)
-    ;; Import management
-    (define-key map "\C-c\C-ia" #'python-add-import)
-    (define-key map "\C-c\C-if" #'python-fix-imports)
-    (define-key map "\C-c\C-ir" #'python-remove-import)
-    (define-key map "\C-c\C-is" #'python-sort-imports)
-    ;; Utilities
-    (substitute-key-definition #'complete-symbol #'completion-at-point
-                               map global-map)
-    (easy-menu-define python-menu map "Python Mode menu"
-      '("Python"
-        :help "Python-specific Features"
-        ["Shift region left" python-indent-shift-left :active mark-active
-         :help "Shift region left by a single indentation step"]
-        ["Shift region right" python-indent-shift-right :active mark-active
-         :help "Shift region right by a single indentation step"]
-        "-"
-        ["Start of def/class" beginning-of-defun
-         :help "Go to start of outermost definition around point"]
-        ["End of def/class" end-of-defun
-         :help "Go to end of definition around point"]
-        ["Mark def/class" mark-defun
-         :help "Mark outermost definition around point"]
-        ["Jump to def/class" imenu
-         :help "Jump to a class or function definition"]
-        "--"
-        ("Skeletons")
-        "---"
-        ["Start interpreter" run-python
-         :help "Run inferior Python process in a separate buffer"]
-        ["Switch to shell" python-shell-switch-to-shell
-         :help "Switch to running inferior Python process"]
-        ["Eval string" python-shell-send-string
-         :help "Eval string in inferior Python session"]
-        ["Eval buffer" python-shell-send-buffer
-         :help "Eval buffer in inferior Python session"]
-        ["Eval statement" python-shell-send-statement
-         :help "Eval statement in inferior Python session"]
-        ["Eval region" python-shell-send-region
-         :help "Eval region in inferior Python session"]
-        ["Eval defun" python-shell-send-defun
-         :help "Eval defun in inferior Python session"]
-        ["Eval file" python-shell-send-file
-         :help "Eval file in inferior Python session"]
-        ["Debugger" pdb :help "Run pdb under GUD"]
-        "----"
-        ["Check file" python-check
-         :help "Check file for errors"]
-        ["Help on symbol" python-eldoc-at-point
-         :help "Get help on symbol at point"]
-        ["Complete symbol" completion-at-point
-         :help "Complete symbol before point"]
-        "-----"
-        ["Add import" python-add-import
-         :help "Add an import statement to the top of this buffer"]
-        ["Remove import" python-remove-import
-         :help "Remove an import statement from the top of this buffer"]
-        ["Sort imports" python-sort-imports
-         :help "Sort the import statements at the top of this buffer"]
-        ["Fix imports" python-fix-imports
-         :help "Add missing imports and remove unused ones from the current buffer"]
-        ))
-    map)
-  "Keymap for `python-mode'.")
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 256 1000 1000))
@@ -161,14 +71,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; (use-package auto-package-update
-;;   :custom
-;;   (auto-package-update-interval 7)
-;;   (auto-package-update-prompt-before-update t)
-;;   (auto-package-update-hide-results t)
-;;   :config
-;;   (auto-package-update-maybe)
-;;   (auto-package-update-at-time "09:00"))
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
@@ -294,10 +196,10 @@
   :config
   (ivy-mode 1))
 
-;; (use-package ivy-rich
-;;   :after ivy
-;;   :init
-;;   (ivy-rich-mode 1))
+(use-package ivy-rich
+  :after ivy
+  :init
+  (ivy-rich-mode 1))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -722,7 +624,8 @@
  ;; If there is more than one, they won't work right.
  '(conda-anaconda-home "/home/paddy/anaconda3/")
  '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
+   '("dd4582661a1c6b865a33b89312c97a13a3885dc95992e2e5fc57456b4c545176"
+     "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476"
      default))
  '(dired-listing-switches "-la --group-directories-first" nil nil "Customized with use-package dired")
  '(flyspell-delay 0.75)
@@ -750,7 +653,21 @@
  '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
  '(magit-git-executable "/usr/local/bin/git")
  '(org-html-doctype "html5")
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(all-the-icons-dired cider command-log-mode conda consult corfu
+			 counsel-projectile coverlay csv csv-mode
+			 dap-mode dired-hide-dotfiles dired-open
+			 dired-single doom-themes ein emacsql-sqlite
+			 envrc eshell-git-prompt eterm-256color forge
+			 general helpful ivy-prescient ivy-rich
+			 jupyter lsp-ivy lsp-pyright lsp-ui
+			 markdown-preview-mode mmm-mode no-littering
+			 org-bullets origami poly-markdown python-mode
+			 pyvenv rainbow-delimiters reformatter
+			 scss-mode tree-sitter-langs treesit-auto
+			 typescript-mode use-package vertico
+			 visual-fill-column which-key yaml-mode
+			 yasnippet))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
@@ -857,9 +774,9 @@
 
 ;(add-hook 'emacs-startup-hook #'efs/start-hook)
 
-(use-package cider
-  :ensure t
-  :pin melpa-stable)
+;; (use-package cider
+;;   :ensure t
+;;   :pin melpa-stable)
 (use-package clojure-mode
   :ensure t
   :pin melpa-stable)

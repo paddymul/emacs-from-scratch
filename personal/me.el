@@ -306,10 +306,12 @@ With a prefix argument, skip the balance check."
 (setq show-trailing-whitespace t)
 
 
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
-(message "about to require paddy-progrmaming-modes")
+
+
 ;
-(require 'paddy-programming-modes)
+
 (require 'keys)
+(message "about to require paddy-progrmaming-modes")
+(require 'paddy-programming-modes)
 (provide 'me)
 ;;; me.el ends here

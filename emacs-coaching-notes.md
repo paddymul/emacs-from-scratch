@@ -153,3 +153,28 @@ Found 1 error in 1 file (checked 1 source file)
 How do I got staright to to line 256?
 
 Should I be running this in compile mode?
+
+
+## 5/30
+
+Why does buckaroo_widget open differently into python mode not python-ts-mode
+
+I understand how to use add-to-alist interactively
+
+How do I reasonably do replace-in-alist so I don't have to restart emacs?
+
+Use M-x remove-hook  and search for val
+don't sowrry about auto-mode-alist containing extra values, as long as it does the right thing when you open a file
+
+
+
+### search
+
+counsel-outline  search headings
+
+
+ivy-counsel mo
+
+Consult provides the preview
+
+
