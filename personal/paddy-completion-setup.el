@@ -40,19 +40,22 @@ Limit list of buffers to those matching the current
     (switch-to-buffer (prot-simple--buffer-major-mode-prompt))))
 
 
+
 (defun prot-simple-buffers-major-mode ()
   "Select BUFFER matching the current one's major mode."
   (interactive)
   (if (and (minibufferp) (eq current-minibuffer-command 'prot-simple-buffers-major-mode))
       (progn
 	(message "about to call unwind-protect")
+
 	(unwind-protect
-            (abort-minibuffers)
+            (minibuffer-quit-recursive-edit)
             ;(minibuffer-quit-recursive-edit)
-	  (progn (message "unwind protect protect block")
+	  (progn (message "unwind protect protect block is in minibufferp %S" (minibufferp)  )
+		 ;; This is a hack.  but while unwind-protect runs, we are still in the minibuffer
 		 (run-at-time nil nil
 			      (lambda () (progn
-					  (message "runtime lambda")
+					  (message "runtime lambda minibufferp %S" (minibufferp))
 					  (call-interactively 'switch-to-buffer)))))))
     (switch-to-buffer (prot-simple--buffer-major-mode-prompt))
 ))
