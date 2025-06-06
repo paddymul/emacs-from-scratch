@@ -178,3 +178,13 @@ ivy-counsel mo
 Consult provides the preview
 
 
+
+
+### Shell setup
+I want a couple of shells to open up each time I start
+
+buckaroo shell, with a psecific uv environment activated
+
+
+marimo shell same venv activated, different dir and command run
+

@@ -189,11 +189,13 @@
   :config
   (ivy-mode 1))
 
+
+
 (use-package ivy-rich
   :after ivy
   :init
   (ivy-rich-mode 1))
-
+(comment trying to get consult-mode working 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
          :map minibuffer-local-map
@@ -203,6 +205,7 @@
   :config
   (counsel-mode 1))
 
+
 (use-package ivy-prescient
   :after counsel
   :custom
@@ -211,6 +214,40 @@
   ;; Uncomment the following line to have sorting remembered across sessions!
   ;(prescient-persist-mode 1)
   (ivy-prescient-mode 1))
+
+
+;; (use-package projectile
+;;   :diminish projectile-mode
+;;   :config (projectile-mode)
+;; ;  :custom ((projectile-completion-system 'ivy))
+;;   :bind-keymap
+;;   ("C-c p" . projectile-command-map)
+;;   :init
+;;   ;; NOTE: Set this to the folder where you keep your Git repos!
+;;   (when (file-directory-p "~/Projects/Code")
+;;     (setq projectile-project-search-path '("~/Projects/Code")))
+;;   (setq projectile-switch-project-action #'projectile-dired))
+
+;; (use-package counsel-projectile
+;;   :after projectile
+;;   :config (counsel-projectile-mode))
+end comment trying to get consult-mode to work
+)
+
+
+(use-package magit
+  :commands magit-status
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;; NOTE: Make sure to configure a GitHub token before using this package!
+;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+(use-package forge
+  :after magit)
+
+
+;; worked when end comment here
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
@@ -503,35 +540,6 @@
 ;; )
 
 
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-;  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :after projectile
-  :config (counsel-projectile-mode))
-
-(use-package magit
-  :commands magit-status
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-(use-package forge
-  :after magit)
-
-;; (use-package evil-nerd-commenter
-;;   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))

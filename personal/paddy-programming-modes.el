@@ -25,7 +25,9 @@
             "/Users/paddy/buckaroo/.venv/bin/basedpyright-langserver" "--stdio"))
 
 (setq major-mode-remap-alist
-      '((python-mode . python-ts-mode)))
+      '((python-mode . python-ts-mode)
+        (json-mode . json-ts-mode))
+)
 
 
 
