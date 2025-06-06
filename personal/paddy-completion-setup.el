@@ -85,6 +85,9 @@ Limit list of buffers to those matching the current
     (switch-to-buffer (prot-simple--buffer-major-mode-prompt))
 ))
 
+(defun paddy-buffer-project ()
+  (interactive)
+  (switch-to-buffer (paddy-simple--buffer-project-git-prompt)))
 					; Now lets add find buffer in project So "s-b" open buffers completing on smae major mode, "s-p" buffers in project, or "s-b" all buffers
 
 
@@ -92,6 +95,7 @@ Limit list of buffers to those matching the current
 ;; pressing "s-b"  will try to bring up completion for all major modes
 
 (define-key global-map (kbd "s-b") #'prot-simple-buffers-major-mode)
+(define-key global-map (kbd "s-p") #'paddy-buffer-project)
 
 
 (provide 'paddy-completion-setup)
