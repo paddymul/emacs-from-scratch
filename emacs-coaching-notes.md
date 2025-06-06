@@ -188,3 +188,19 @@ buckaroo shell, with a psecific uv environment activated
 
 marimo shell same venv activated, different dir and command run
 
+
+
+## 6/6
+
+Continue with find/xargs setup setup.  There are conflicts with ivy
+happy to dismiss ivy
+
+
+also tab completion in shell isn't consistent
+
+
+maybe get to better shell switching
+
+maybe python mode compliaing about errors not related to my project
+
+
