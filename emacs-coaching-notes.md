@@ -204,3 +204,6 @@ maybe get to better shell switching
 maybe python mode compliaing about errors not related to my project
 
 
+
+M-x dirs sometimes
+

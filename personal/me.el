@@ -313,5 +313,6 @@ With a prefix argument, skip the balance check."
 (require 'keys)
 (message "about to require paddy-progrmaming-modes")
 (require 'paddy-programming-modes)
+(require 'paddy-completion-setup)
 (provide 'me)
 ;;; me.el ends here

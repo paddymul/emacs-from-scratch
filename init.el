@@ -596,12 +596,12 @@
 			 dap-mode dired-hide-dotfiles dired-open
 			 dired-single doom-themes ein emacsql-sqlite
 			 envrc eshell-git-prompt eterm-256color forge
-			 general helpful 
-			 jupyter  lsp-pyright lsp-ui
-			 markdown-preview-mode mmm-mode no-littering
-			 org-bullets origami poly-markdown python-mode
-			 pyvenv rainbow-delimiters reformatter
-			 scss-mode tree-sitter-langs treesit-auto
+			 general helpful jupyter lsp-pyright lsp-ui
+			 marginalia markdown-preview-mode mmm-mode
+			 no-littering org-bullets origami
+			 poly-markdown python-mode pyvenv
+			 rainbow-delimiters reformatter scss-mode
+			 tree-sitter-langs treesit-auto
 			 typescript-mode use-package vertico
 			 visual-fill-column which-key yaml-mode
 			 yasnippet))
