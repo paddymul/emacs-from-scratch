@@ -81,7 +81,7 @@
 (global-set-key (kbd "s-g") 'magit-status)
 (global-set-key (kbd "s-w") 'delete-window)
 (global-set-key (kbd "s-=") 'balance-windows)
-(global-set-key (kbd "s-b") 'ivy-switch-buffer)
+;(global-set-key (kbd "s-b") 'ivy-switch-buffer)
 
 
 ; want a function that rotates the case of word, not important, rarely use this

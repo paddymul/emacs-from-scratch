@@ -171,68 +171,6 @@
   (which-key-mode)
   (setq which-key-idle-delay 1))
 
-(use-package ivy
-  :diminish
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
-
-
-
-(use-package ivy-rich
-  :after ivy
-  :init
-  (ivy-rich-mode 1))
-(comment trying to get consult-mode working 
-(use-package counsel
-  :bind (("C-M-j" . 'counsel-switch-buffer)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
-  :custom
-  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
-  :config
-  (counsel-mode 1))
-
-
-(use-package ivy-prescient
-  :after counsel
-  :custom
-  (ivy-prescient-enable-filtering nil)
-  :config
-  ;; Uncomment the following line to have sorting remembered across sessions!
-  ;(prescient-persist-mode 1)
-  (ivy-prescient-mode 1))
-
-
-;; (use-package projectile
-;;   :diminish projectile-mode
-;;   :config (projectile-mode)
-;; ;  :custom ((projectile-completion-system 'ivy))
-;;   :bind-keymap
-;;   ("C-c p" . projectile-command-map)
-;;   :init
-;;   ;; NOTE: Set this to the folder where you keep your Git repos!
-;;   (when (file-directory-p "~/Projects/Code")
-;;     (setq projectile-project-search-path '("~/Projects/Code")))
-;;   (setq projectile-switch-project-action #'projectile-dired))
-
-;; (use-package counsel-projectile
-;;   :after projectile
-;;   :config (counsel-projectile-mode))
-end comment trying to get consult-mode to work
-)
 
 
 (use-package magit
@@ -495,8 +433,6 @@ end comment trying to get consult-mode to work
 ;; (use-package lsp-treemacs
 ;;   :after lsp)
 
-;; (use-package lsp-ivy
-;;   :after lsp)
 
 ;; (use-package dap-mode
 ;;   ;; Uncomment the config below if you want all UI panes to be hidden by default!
@@ -660,8 +596,8 @@ end comment trying to get consult-mode to work
 			 dap-mode dired-hide-dotfiles dired-open
 			 dired-single doom-themes ein emacsql-sqlite
 			 envrc eshell-git-prompt eterm-256color forge
-			 general helpful ivy-prescient ivy-rich
-			 jupyter lsp-ivy lsp-pyright lsp-ui
+			 general helpful 
+			 jupyter  lsp-pyright lsp-ui
 			 markdown-preview-mode mmm-mode no-littering
 			 org-bullets origami poly-markdown python-mode
 			 pyvenv rainbow-delimiters reformatter
@@ -679,7 +615,6 @@ end comment trying to get consult-mode to work
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ivy-current-match ((t (:extend t :background "dark green"))))
  '(mode-line ((t (:background "navy" :foreground "#A6Accd" :box nil)))))
 
     (defun load-directory (dir)
