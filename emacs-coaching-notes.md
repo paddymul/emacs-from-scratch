@@ -193,10 +193,12 @@ marimo shell same venv activated, different dir and command run
 ## 6/6
 
 Continue with find/xargs setup setup.  There are conflicts with ivy
-happy to dismiss ivy
+happy to dismiss ivy #Done
 
 
 also tab completion in shell isn't consistent
+
+corfu gives an overlay of completions
 
 
 maybe get to better shell switching
@@ -206,4 +208,19 @@ maybe python mode compliaing about errors not related to my project
 
 
 M-x dirs sometimes
+
+
+s-b search through current major mode buffers
+if while search through current major mode buffers, search through all mode buffers
+
+
+## 6/13
+
+how to make "make-directory" a keypress instead of an M-x command?
+
+How to make a command for lsof port -> process
+is there a proced?
+
+This is porbalby a low priority change
+
 
