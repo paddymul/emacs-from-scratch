@@ -736,14 +736,6 @@
 (setq dired-listing-switches "-al --group-directories-first")
 
 
-(use-package consult
-  :ensure t
-  :bind (("M-s M-g" . consult-grep)
-         ("M-s M-s" . consult-outline))
-)
-
-(setq completion-styles '(substring basic))
-
 
 (require 'me)
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")

@@ -214,13 +214,49 @@ s-b search through current major mode buffers
 if while search through current major mode buffers, search through all mode buffers
 
 
-## 6/13
 
-how to make "make-directory" a keypress instead of an M-x command?
+## backlog
 
 How to make a command for lsof port -> process
 is there a proced?
 
 This is porbalby a low priority change
+
+## 6/13
+
+how to make "make-directory" a keypress instead of an M-x command?
+
+
+how to change the vertico sort function
+I want to sort by "same mode", "directory distance"
+
+
+Another buffer switch completion idea...
+How do I set it up so the same major mode buffers are listed below where the cursor starts
+and the 5 most recent other buffers are listed above
+
+
+... or for major modes that related majore modes are searched.  TS, TSX, and JS are all related modes
+#### Prot says
+This will require custom coding
+
+
+### syntax highlinghting gets in the way
+
+I couldn't find the missing comma after rewritten_col_name:'a'},
+because of all the squigles in python mode
+
+        assert assert_dict_eq({
+            'a': {'distinct_count': 4, 'distinct_per':1.0, 'len': 4,
+                  'orig_col_name':'normal_int_series', 'rewritten_col_name':'a'}
+            'b': {'distinct_count': 0, 'distinct_per':0, 'len': 0,
+                  'orig_col_name':'empty_na_ser', 'rewritten_col_name':'b'},
+            'c': {'distinct_count': 2, 'distinct_per':0, 'len': 0,
+                  'orig_col_name':'float_nan_ser', 'rewritten_col_name':'c'}},
+
+We also need to switch the theme/faces
+I hate python inlay mode because it suggests keyword arguments everywhere
+
+also the inly face is the same as the comment face
 
 

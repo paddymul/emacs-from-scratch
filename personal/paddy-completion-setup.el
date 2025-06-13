@@ -75,7 +75,6 @@ Limit list of buffers to those matching the current
 
 	(unwind-protect
             (minibuffer-quit-recursive-edit)
-            ;(minibuffer-quit-recursive-edit)
 	  (progn (message "unwind protect protect block is in minibufferp %S" (minibufferp)  )
 		 ;; This is a hack.  but while unwind-protect runs, we are still in the minibuffer
 		 (run-at-time nil nil
@@ -84,6 +83,7 @@ Limit list of buffers to those matching the current
 					  (call-interactively 'switch-to-buffer)))))))
     (switch-to-buffer (prot-simple--buffer-major-mode-prompt))
 ))
+
 
 (defun paddy-buffer-project ()
   (interactive)
@@ -96,6 +96,15 @@ Limit list of buffers to those matching the current
 
 (define-key global-map (kbd "s-b") #'prot-simple-buffers-major-mode)
 (define-key global-map (kbd "s-p") #'paddy-buffer-project)
+
+(use-package consult
+  :ensure t
+  :bind (("M-s M-g" . consult-grep)
+         ("M-s M-s" . consult-outline))
+)
+
+(setq completion-styles '(substring basic))
+
 
 
 (provide 'paddy-completion-setup)
