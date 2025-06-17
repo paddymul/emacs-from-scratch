@@ -725,5 +725,10 @@
 
 
 (require 'me)
+
+(find-file "/Users/paddy/.emacs.d/init.el")
+(find-file "/Users/paddy/.emacs.d/personal/paddy-programming-modes.el")
+(find-file "/Users/paddy/.emacs.d/personal/paddy-completion-setup.el")
+(find-file "/Users/paddy/.emacs.d/emacs-coaching-notes.md")
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
 ;exec-path

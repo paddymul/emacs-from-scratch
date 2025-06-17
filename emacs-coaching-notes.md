@@ -324,4 +324,16 @@ I also want better auto-detection of typescript indentation
 I deleted a bunch of packages from ~/.emacs.d/elpa because I was getting "older than compiled" warnings on startup and I found them tiring
 
 
+### What to work on next
+corfu?
+window mangement?
+magit?   probably not because I'm not doing a lot of collaboration where it matters
+
+emacs startup open buffers?
+
+
+## tips before coaching session
+
+make sure .emacs git repo is comitted
+
 

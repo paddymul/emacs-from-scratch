@@ -40,10 +40,20 @@
 (setq tab-always-indent 'complete)
 ;provides feature
 
-;; Compile-mode setup
+
+
+;;;; Compile-mode setup
+
 (setq compilation-scroll-output 'first-error)
-;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
+
+
+
 (require 'ansi-color)
+(setq ansi-color-for-comint-mode t)
+
+
+(define-key global-map (kbd "s-c") (lambda () (interactive (call-interactively 'compile))))
+
 (defun endless/colorize-compilation ()
   "Colorize from `compilation-filter-start' to `point'."
   (let ((inhibit-read-only t))
@@ -52,7 +62,17 @@
 
 (add-hook 'compilation-filter-hook
           #'endless/colorize-compilation)
-(define-key global-map (kbd "s-c") (lambda () (interactive (call-interactively 'compile))))
+
+(setq paddy-jest-regexp "^[\s\t]*\\(?:.*(\\)\\(?1:.*\\):\\(?2:[0-9]+\\)?:\\(?3:[0-9]+\\)?")
+
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(buckaroo
+               "^[\s\t]*\\(?:.*(\\)\\(?1:.*\\):\\(?2:[0-9]+\\)?:\\(?3:[0-9]+\\)?"
+               1 2 3))
+
+(add-to-list 'compilation-error-regexp-alist 'buckaroo) 
+;;; end compile-mode setup
+
 
 (define-key global-map (kbd "s-m") (lambda () (interactive (message "super-m"))))
 
