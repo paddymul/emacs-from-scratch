@@ -63,14 +63,17 @@
 (add-hook 'compilation-filter-hook
           #'endless/colorize-compilation)
 
-(setq paddy-jest-regexp "^[\s\t]*\\(?:.*(\\)\\(?1:.*\\):\\(?2:[0-9]+\\)?:\\(?3:[0-9]+\\)?")
+;;"^[\s\t]* ; ignore beginning tabs/spaces (one or more)
+;;\\(?:.*(\\) non named group of intermediate text until the opening paren
+;;\\(?1:.*\\): group number 1, match until first colon:, filename ...
+(comment "^[\s\t]*\\(?:.*(\\)\\(?1:.*\\):\\(?2:[0-9]+\\)?:\\(?3:[0-9]+\\)?")
 
 (add-to-list 'compilation-error-regexp-alist-alist
-             '(buckaroo
+             '(jest-error-regexp
                "^[\s\t]*\\(?:.*(\\)\\(?1:.*\\):\\(?2:[0-9]+\\)?:\\(?3:[0-9]+\\)?"
                1 2 3))
 
-(add-to-list 'compilation-error-regexp-alist 'buckaroo) 
+(add-to-list 'compilation-error-regexp-alist 'jest-error-regexp) 
 ;;; end compile-mode setup
 
 
