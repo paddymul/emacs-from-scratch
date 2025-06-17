@@ -592,21 +592,7 @@
  '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
  '(magit-git-executable "/opt/homebrew/bin/git")
  '(org-html-doctype "html5")
- '(package-selected-packages
-   '(all-the-icons-dired cider command-log-mode ;; conda consult corfu
-			 counsel-projectile coverlay csv csv-mode
-			 dap-mode dired-hide-dotfiles dired-open
-			 dired-single doom-themes ein emacsql-sqlite
-			 envrc eshell-git-prompt eterm-256color forge
-			 general helpful jupyter lsp-pyright lsp-ui
-			 marginalia markdown-preview-mode mmm-mode
-			 no-littering org-bullets origami
-			 poly-markdown python-mode pyvenv
-			 rainbow-delimiters reformatter scss-mode
-			 tree-sitter-langs treesit-auto
-			 typescript-mode use-package vertico
-			 visual-fill-column which-key yaml-mode
-			 yasnippet))
+ '(package-selected-packages nil)
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))

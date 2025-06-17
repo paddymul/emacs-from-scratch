@@ -53,4 +53,7 @@
 (add-hook 'compilation-filter-hook
           #'endless/colorize-compilation)
 (define-key global-map (kbd "s-c") (lambda () (interactive (call-interactively 'compile))))
+
+(define-key global-map (kbd "s-m") (lambda () (interactive (message "super-m"))))
+
 (provide 'paddy-programming-modes)

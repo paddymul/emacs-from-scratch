@@ -276,10 +276,14 @@ project-compile default is M-x p c
 
 How to scroll to bottom or first error when complete
 
+fix regex for jest test failures
+
+
 shortcuts for rerun last failed test
 ideal world:
 when a save is made to a relevant file (in project, or in project and of type (pytest/pnpm run test)
 last failed is rerun, results reported asynchonously (I don't want a wholewindow, maybe just a double stacked modeline)
+
 
 
 ### find-grep
@@ -298,6 +302,26 @@ I really dislike the python indentation
 
 I also want better auto-detection of typescript indentation
 
+
+# did I bork something with this change
+
+- '(package-selected-packages
+-   '(all-the-icons-dired cider command-log-mode ;; conda consult corfu
+-			 counsel-projectile coverlay csv csv-mode
+-			 dap-mode dired-hide-dotfiles dired-open
+-			 dired-single doom-themes ein emacsql-sqlite
+-			 envrc eshell-git-prompt eterm-256color forge
+-			 general helpful jupyter lsp-pyright lsp-ui
+-			 marginalia markdown-preview-mode mmm-mode
+-			 no-littering org-bullets origami
+-			 poly-markdown python-mode pyvenv
+-			 rainbow-delimiters reformatter scss-mode
+-			 tree-sitter-langs treesit-auto
+-			 typescript-mode use-package vertico
+-			 visual-fill-column which-key yaml-mode
+-			 yasnippet))
++ '(package-selected-packages nil)
+I deleted a bunch of packages from ~/.emacs.d/elpa because I was getting "older than compiled" warnings on startup and I found them tiring
 
 
 
