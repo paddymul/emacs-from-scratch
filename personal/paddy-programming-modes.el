@@ -34,26 +34,22 @@
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
 (define-key eglot-mode-map (kbd "C-;") 'eglot-code-actions)
 
-(use-package corfu
-  :ensure t
-  :if (display-graphic-p)
-  :hook (after-init . global-corfu-mode)
-  ;; I also have (setq tab-always-indent 'complete) for TAB to complete
-  ;; when it does not need to perform an indentation change.
-  :bind (:map corfu-map ("<tab>" . corfu-complete))
-  :config
-  (setq corfu-preview-current nil)
-  (setq corfu-min-width 20)
 
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
-
-  ;; Sort by input history (no need to modify `corfu-sort-function').
-  (with-eval-after-load 'savehist
-    (corfu-history-mode 1)
-    (add-to-list 'savehist-additional-variables 'corfu-history)))
 
 (setq tab-always-indent 'complete)
 ;provides feature
-          
+
+;; Compile-mode setup
+(setq compilation-scroll-output 'first-error)
+;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
+(require 'ansi-color)
+(defun endless/colorize-compilation ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region
+     compilation-filter-start (point))))
+
+(add-hook 'compilation-filter-hook
+          #'endless/colorize-compilation)
+(define-key global-map (kbd "s-c") (lambda () (interactive (call-interactively 'compile))))
 (provide 'paddy-programming-modes)

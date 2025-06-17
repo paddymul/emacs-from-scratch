@@ -11,7 +11,7 @@
 (use-package savehist
   :ensure nil
   :config
-  (savehist-mode 1)) 
+  (savehist-mode 1))
 
 
 (defun prot-simple--buffer-major-mode-prompt ()
@@ -61,8 +61,6 @@ Limit list of buffers to those matching the current
 	 (message "cdr pair %S" (cdr pair))
 	 (equal (find-git-root-recursive (buffer-file-name (cdr pair))) current-git-root))))))
 
-(switch-to-buffer (paddy-simple--buffer-project-git-prompt))
-
 
 
 
@@ -101,7 +99,53 @@ Limit list of buffers to those matching the current
   :ensure t
   :bind (("M-s M-g" . consult-grep)
          ("M-s M-s" . consult-outline))
-)
+  :config
+  (setq grep-find-ignored-directories
+		'("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN"
+		  ".pytest_cache" ; python projects I have never wanted to search it
+		  ".mypy_cache"  ; never want to search
+		  "node_modules" ; js projects - sometimes want to search
+		  ".next" ; generated next.  Never have wanted to search, only would to debug something funky
+		 ))
+  (setq grep-find-ignored-files
+	'(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl"
+	  "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class"
+	  "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl"
+	  "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl"
+	  "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl"
+	  "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo"
+	  "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr"
+	  "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo"
+	  
+	  "*.ipynb" ; I would only want to search the code of these
+		    ; files, almost never the output. The code output
+		    ; can be huge. whole file is stored as JSON. It
+		    ; would be cool to have special grep command
+		    ; linked with JQ for these files, but very
+		    ; specialized, late stage feature
+
+	  )
+	)
+  )
+
+
+;; (defun my-consult-grep-alt ()
+;;   (interactive)
+
+
+;;   (let ((grep-find-ignored-directories
+;;         '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN"
+;;           "_darcs" "{arch}" ".repo" ".jj" "node_modules" "alt")))
+;;     (call-interactively 'consult-grep))
+;; ) 
+
+;;   (setq grep-find-ignored-files
+;;         (cons ".#*" (delq nil (mapcar (lambda (s)
+;; 				                        (unless (string-match-p "/\\'" s)
+;; 				                          (concat "*" s)))
+;; 				                      (append (list "test1" "test2")
+;;                                                completion-ignored-extensions))))) 
+
 
 (setq completion-styles '(substring basic))
 

@@ -260,3 +260,25 @@ I hate python inlay mode because it suggests keyword arguments everywhere
 also the inly face is the same as the comment face
 
 
+
+
+## Testing
+
+project-compile
+compile-command
+
+use .dir-locals.el
+
+project-compile default is M-x p c
+
+
+How to scroll to bottom or first error when complete
+
+shortcuts for rerun last failed test
+
+
+### find-grep
+
+How do I pop the minibuffer out to a different window for deeper work? .. with notes
+That's important when delving deep into a project, not relevant when I know what I want to find but don't know where to find it
+
