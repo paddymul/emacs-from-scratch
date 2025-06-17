@@ -329,11 +329,21 @@ corfu?
 window mangement?
 magit?   probably not because I'm not doing a lot of collaboration where it matters
 
-emacs startup open buffers?
+;;emacs startup open buffers?
 
 
 ## tips before coaching session
 
 make sure .emacs git repo is comitted
+
+
+## grep refinements
+
+filter out files with more than 5k lines
+or any match on a line at char greater than 1k
+
+those are generated files
+
+but later
 
 

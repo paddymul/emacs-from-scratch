@@ -147,7 +147,28 @@ Limit list of buffers to those matching the current
 ;;                                                completion-ignored-extensions))))) 
 
 
-(setq completion-styles '(substring basic))
+(use-package orderless)
+(setq completion-styles '(basic substring initials flex orderless))
+
+;; Needed for correct exporting while using Embark with Consult
+;; commands.
+(use-package embark
+    :ensure t
+    :bind
+    ( :map minibuffer-local-map
+      ("C-c C-c" . embark-collect) ;; send minibuffer contents to another buffer
+      ("C-c C-e" . embark-export)))
+
+  ;; Needed for correct exporting while using Embark with Consult
+  ;; commands.
+  (use-package embark-consult
+    :ensure t
+    :after (embark consult))
+
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult))
 
 
 

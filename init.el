@@ -592,11 +592,25 @@
  '(lsp-typescript-npm "PATH=/opt/homebrew/bin/:$PATH /opt/homebrew/bin/npm")
  '(magit-git-executable "/opt/homebrew/bin/git")
  '(org-html-doctype "html5")
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(all-the-icons-dired bind-key cider command-log-mode conda consult
+			 corfu counsel-projectile coverlay csv
+			 csv-mode dap-mode dired-hide-dotfiles
+			 dired-open dired-single doom-themes ein
+			 emacsql-sqlite embark embark-consult envrc
+			 eshell-git-prompt eterm-256color forge
+			 general helpful ivy-prescient ivy-rich
+			 jupyter lsp-ivy lsp-pyright lsp-ui marginalia
+			 markdown-preview-mode mmm-mode no-littering
+			 orderless org-bullets origami poly-markdown
+			 python-mode pyvenv rainbow-delimiters
+			 reformatter scss-mode tree-sitter-langs
+			 treesit-auto typescript-mode vertico
+			 visual-fill-column yaml-mode yasnippet))
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2 t))
+ '(typescript-indent-level 2))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
