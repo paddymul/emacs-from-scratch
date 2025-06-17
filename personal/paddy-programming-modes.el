@@ -10,6 +10,7 @@
 ;(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (add-hook 'tsx-ts-mode-hook 'eglot-ensure)
+(add-hook 'typescript-ts-mode-hook 'eglot-ensure)
 
 
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))

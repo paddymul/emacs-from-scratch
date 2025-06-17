@@ -593,7 +593,7 @@
  '(magit-git-executable "/opt/homebrew/bin/git")
  '(org-html-doctype "html5")
  '(package-selected-packages
-   '(all-the-icons-dired cider command-log-mode conda consult corfu
+   '(all-the-icons-dired cider command-log-mode ;; conda consult corfu
 			 counsel-projectile coverlay csv csv-mode
 			 dap-mode dired-hide-dotfiles dired-open
 			 dired-single doom-themes ein emacsql-sqlite

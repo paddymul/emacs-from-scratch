@@ -257,6 +257,8 @@ because of all the squigles in python mode
 We also need to switch the theme/faces
 I hate python inlay mode because it suggests keyword arguments everywhere
 
+turn off flymake mode
+
 also the inly face is the same as the comment face
 
 
@@ -275,10 +277,27 @@ project-compile default is M-x p c
 How to scroll to bottom or first error when complete
 
 shortcuts for rerun last failed test
+ideal world:
+when a save is made to a relevant file (in project, or in project and of type (pytest/pnpm run test)
+last failed is rerun, results reported asynchonously (I don't want a wholewindow, maybe just a double stacked modeline)
 
 
 ### find-grep
 
 How do I pop the minibuffer out to a different window for deeper work? .. with notes
 That's important when delving deep into a project, not relevant when I know what I want to find but don't know where to find it
+
+
+### completion modes
+I want the case insensitive matching
+
+
+### indentation
+
+I really dislike the python indentation
+
+I also want better auto-detection of typescript indentation
+
+
+
 
