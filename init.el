@@ -4,6 +4,7 @@
 ;; You will most likely need to adjust this font size for your system!
 
 
+(setq gc-cons-threshold most-positive-fixnum)
 (add-to-list 'load-path  "/Users/paddy/.emacs.d/personal")
 
 
@@ -34,7 +35,7 @@
 
 
 ;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 256 1000 1000))
+
 (setq read-process-output-max (* 1024 1024))
 
 (defun efs/display-startup-time ()
@@ -596,7 +597,7 @@
    '(all-the-icons-dired bind-key cider command-log-mode conda consult
 			 corfu counsel-projectile coverlay csv
 			 csv-mode dap-mode dired-hide-dotfiles
-			 dired-open dired-single doom-themes ein
+			 dired-open dired-single doom-themes eglot ein
 			 emacsql-sqlite embark embark-consult envrc
 			 eshell-git-prompt eterm-256color forge
 			 general helpful ivy-prescient ivy-rich
@@ -745,4 +746,7 @@
 (find-file "/Users/paddy/.emacs.d/personal/paddy-completion-setup.el")
 (find-file "/Users/paddy/.emacs.d/emacs-coaching-notes.md")
 (add-to-list 'exec-path "/Users/paddy/miniforge3/bin/")
+
+(setq gc-cons-threshold (* 256 1000 1000))
+(garbage-collect)
 ;exec-path

@@ -1,6 +1,7 @@
 
 (require 'eglot)
 
+(fset #'jsonrpc--log-event #'ignore)
 (require 'python-mode)
 (add-hook 'typescript-mode-hook 'eglot-ensure)
 
