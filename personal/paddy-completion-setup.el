@@ -106,6 +106,7 @@ Limit list of buffers to those matching the current
 		  ".mypy_cache"  ; never want to search
 		  "node_modules" ; js projects - sometimes want to search
 		  ".next" ; generated next.  Never have wanted to search, only would to debug something funky
+		  "buckaroo/static"
 		 ))
   (setq grep-find-ignored-files
 	'(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl"
@@ -116,7 +117,8 @@ Limit list of buffers to those matching the current
 	  "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo"
 	  "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr"
 	  "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo"
-	  
+	  "widget.js"
+	  "embed-bundle.js" "embed-bundle.js.map"
 	  "*.ipynb" ; I would only want to search the code of these
 		    ; files, almost never the output. The code output
 		    ; can be huge. whole file is stored as JSON. It
@@ -124,9 +126,8 @@ Limit list of buffers to those matching the current
 		    ; linked with JQ for these files, but very
 		    ; specialized, late stage feature
 
-	  )
-	)
-  )
+	  )))
+
 
 
 ;; (defun my-consult-grep-alt ()
@@ -149,6 +150,11 @@ Limit list of buffers to those matching the current
 
 (use-package orderless)
 (setq completion-styles '(basic substring initials flex orderless))
+(setq read-buffer-completion-ignore-case t)
+(setq completion-ignore-case t)
+(setq-default case-fold-search t)   ; For general regexp
+(setq read-file-name-completion-ignore-case t) 
+
 
 ;; Needed for correct exporting while using Embark with Consult
 ;; commands.
@@ -170,33 +176,26 @@ Limit list of buffers to those matching the current
   :ensure t
   :after (embark consult))
 
-(use-package corfu
-  ;; Optional customizations
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+(use-package company
+  :ensure t
+  :bind
+  ( :map global-map
+    ("M-'" . company-complete))
 
-  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+  :config
 
-  :init
-
-  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
-  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
-  ;; variable `global-corfu-modes' to exclude certain modes.
-  (global-corfu-mode)
+  (setq company-idle-delay nil)
+  (setq company-backends `(company-capf))
+  ;; (setq company-backends
+  ;;       '(company-capf
+  ;;         company-files
+  ;;         (company-dabbrev-code company-gtags company-etags company-keywords)
+  ;;         company-dabbrev))
 
 
 
-  ;; Enable optional extension modes:
-  ;; (corfu-history-mode)
-  ;; (corfu-popupinfo-mode)
-  )
+  (global-company-mode 1))
 
+(setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+(setq xref-prompt-for-identifier t)
 (provide 'paddy-completion-setup)

@@ -594,8 +594,8 @@
  '(magit-git-executable "/opt/homebrew/bin/git")
  '(org-html-doctype "html5")
  '(package-selected-packages
-   '(all-the-icons-dired bind-key cider command-log-mode conda consult
-			 corfu counsel-projectile coverlay csv
+   '(all-the-icons-dired bind-key cider command-log-mode company conda
+			 consult corfu counsel-projectile coverlay csv
 			 csv-mode dap-mode dired-hide-dotfiles
 			 dired-open dired-single doom-themes eglot ein
 			 emacsql-sqlite embark embark-consult envrc
@@ -611,7 +611,7 @@
  '(prelude-whitespace nil)
  '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2))
+ '(typescript-indent-level 2 t))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

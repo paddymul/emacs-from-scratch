@@ -347,3 +347,31 @@ those are generated files
 but later
 
 
+## Find file enhancement
+
+I frequently want to open the relevant package.json or README or...
+from a file
+
+from C-x C-f, lets make another modemap
+
+
+S-r -> closest README
+S-p -> closest package.json
+
+let's try to get this modemap into switch-buffer too.  in fact for this type of operation, I just want the file open, so in switch buffer, just open the appropriate file, I don't want to think did I open that buffer
+
+
+
+# 7/4/2025
+
+
+Let's do some shell startup scripts
+
+
+how to write Test this file
+how to write show tests that reference this function (using lsp/eglot) and run those tests
+
+probably need a pytest specific command
+
+
+
