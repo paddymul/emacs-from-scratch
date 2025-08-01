@@ -375,3 +375,41 @@ probably need a pytest specific command
 
 
 
+# 7/18/2025
+
+## grep,  i need to exclude more files, and long lines
+Searching for DataFlow
+I know that this is a python concept, not JS/TS
+so I wouldn't want JS/TS files to show up
+I also would want to exclude .venv by default
+
+at a minimum sort search results putthing files of same extension family at the top
+py -> [py]
+js -> [js, ts, jsx, tsx]
+ts -> [ts, js, tsx, jsx]
+jsx -> [jsx, tsx, js, ts]
+tsx -> [tsx, jsx, ts, js]
+
+assume a program
+
+fast-find-grep exclude-dir-list always-exclude-dir-list  extension-sort-order grep-args
+# first run find exluding exlude-dir-list, sort by extension-sort-order, run grep-args on this, 
+# then run specifically on  exlude-dir-list, sort by extension-sort-order, run grep-args on this
+/opt/homebrew/opt/findutils/libexec/gnubin/find 
+/opt/homebrew/opt/findutils/libexec/gnubin/find  . -not \( -iregex ".*\.?\(config\|pass\|Builds\).*" -prune \) -type d 
+
+always exclude
+.git .mypy_cache ruff_cache pytest_cache __marimo__
+
+the exclude command 
+time /opt/homebrew/opt/findutils/libexec/gnubin/find  . -not \( -iregex ".*\.?\(node_modules\|venv\|git\|mypy_cache\|ruff_cache\|pytest_cache\|__marimo__\).*" -prune \) -type f | wc -l
+
+
+
+## dired, how to toggle hidden files
+
+C-x C-f, how to make backward kill word not add to kill-ring
+
+
+
+big_file.md,  long python lines by default

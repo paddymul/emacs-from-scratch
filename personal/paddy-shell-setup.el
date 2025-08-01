@@ -48,7 +48,7 @@ ARGS is a list of strings."
 (defun paddy-shell-start-marimo ()
   (interactive)
   (paddy-compile-with-buffer-name
-   "/Users/paddy/buckaroo/.venv/bin/marimo edit"
+   "cd /Users/paddy/buckaroo/docs/example-notebooks; /Users/paddy/buckaroo/.venv/bin/marimo edit"
    "marimo-co-sh"))
 
 (paddy-shell-start-marimo)
@@ -65,4 +65,7 @@ ARGS is a list of strings."
       (sit-for 1)
       (apply 'prot-shell--insert-and-send activate-uv))))
 (paddy-shell-start-regular-shell)
+
+;; figure out with these shells, how to not poluute globabl shell history
+
 (provide 'paddy-shell-setup)
