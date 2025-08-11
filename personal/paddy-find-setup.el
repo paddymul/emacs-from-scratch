@@ -12,7 +12,9 @@
 	 (py-secondary-extensions  (my-parse-extensions '("js" "ts" "jsx" "tsx")))
 	 (py-never-directories (my-parse-directories '(".ruff" ".git" "pycache" "dist")))
 	 (py-never-extensions (my-parse-extensions '("pyc" ".d.ts"))))
-    (princ (format-spec "%a \"%b\" \"%c\" \"%d\" \"%e\" \"%f\" \"%g\" \"%h\" \"%i\" ||| "
+					;    (format "%s"
+;    (princ
+     (format-spec "%a \"%b\" \"%c\" \"%d\" \"%e\" \"%f\" \"%g\" \"%h\" \"%i\" "
 			`((?a . ,paddy-find-script)
 			  (?b . ,root-directory)  ; search_root $1
 			  (?c . ,search-term)     ; search_term $2
@@ -22,35 +24,159 @@
 			  (?g . ,py-secondary-extensions) ; secondary_extensions $6
 			  (?h . ,py-never-directories) ; never_directories $7
 			  (?i . ,py-never-extensions) ; never_extensions $8
-			  )))))
-(paddy-py-find-grep "~/Buckaroo" "color_map")
+			  ))
+;	   )
+    ))
+;(paddy-py-find-grep "~/Buckaroo" "color_map")
+;(shell-command (paddy-py-find-grep "/Users/paddy/Buckaroo" "color_map"))
+;(shell-command "ls")
+
+;;orig
+(setq consult-grep-args
+  '("grep" (consult--grep-exclude-args)
+    "--null --line-buffered --color=never --ignore-case\
+     --with-filename --line-number -I -r"))
+(setq consult-grep-args
+  '("our-find-command" (consult--grep-exclude-args)
+    "--null --line-buffered --color=never --ignore-case\
+     --with-filename --line-number -I -r"))
+
+(cl-letf ((
+       (symbol-function #'consult--grep-make-builder) (lambda (paths)
+  "Build grep command line and grep across PATHS."
+  (let* ((cmd (consult--build-args consult-grep-args))
+         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+    (lambda (input)
+      (message "50 input %s" input)
+      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                   (flags (append cmd opts))
+                   (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
+	(message "54 arg %s flags %s" input flags)
+        (if (or (member "-F" flags) (member "--fixed-strings" flags))
+	    (progn
+	      (message "57")
+            (cons (append cmd (list "-e" arg) opts paths)
+                  (apply-partially #'consult--highlight-regexps
+                                   (list (regexp-quote arg)) ignore-case))
+	  )
+          (pcase-let ((`(,re . ,hl) (consult--compile-regexp arg type ignore-case)))
+            (when re
+              (cons (append cmd
+                            (list (if (eq type 'pcre) "-P" "-E") ;; perl or extended
+                                  "-e" (consult--join-regexps re type))
+                            opts paths)
+                    hl))))))))))
+				  (call-interactively 'consult-grep))
+
+
+(cl-letf ((
+       (symbol-function #'consult--grep-make-builder) (lambda (paths)
+  "Build grep command line and grep across PATHS."
+  (let* ((cmd (consult--build-args consult-grep-args))
+         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+    (lambda (input)
+      (message "50 input %s" input)
+      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                   (flags (append cmd opts))
+                   (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
+	(message "54 arg %s flags %s" input flags)
+          (pcase-let ((`(,re . ,hl) (consult--compile-regexp arg type ignore-case)))
+            (when re
+              (cons (append cmd
+                            (list (if (eq type 'pcre) "-P" "-E") ;; perl or extended
+                                  "-e" (consult--join-regexps re type))
+                            opts paths)
+                    hl)))))))))
+				  (call-interactively 'consult-grep))
+(cl-letf ((
+       (symbol-function #'consult--grep-make-builder) (lambda (paths)
+  "Build grep command line and grep across PATHS."
+  (let* ((cmd (consult--build-args consult-grep-args))
+         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+    (lambda (input)
+      (message "50 input %s" input)
+      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                   (flags (append cmd opts))
+                   (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
+	(message "54 arg %s flags %s" input flags)
+        (pcase-let ((`(,re . ,hl) (consult--compile-regexp arg type ignore-case)))
+	  (message "103 type %s %s" type (eq type 'pcre))
+            (when re
+              (cons (append cmd
+                            (list (if (eq type 'pcre) "-P" "-E") ;; perl or extended
+                                  "-e" (consult--join-regexps re type))
+                            opts paths)
+                    hl)))))))))
+				  (call-interactively 'consult-grep))
+
+
+paddy-py-find-grep
+
+(let ((builder
+       (lambda (paths ) (progn (message "%s" paths)
+			       (lambda (nested-arg)
+				 (progn (message "nested-arg %s" nested-arg)
+					'("ls")))))))
+  (consult--grep "paddy-41" builder  "/Users/paddy/code" "4th"))
+
+(defun paddy-py-find-grep (root-directory search-term)
+  (let* ((py-preferred-extensions (my-parse-extensions '("py")))
+	     (py-secondary-directories (my-parse-directories '(".venv" "foo")))
+	     (py-secondary-extensions  (my-parse-extensions '("js" "ts" "jsx" "tsx")))
+	     (py-never-directories (my-parse-directories '(".ruff" ".git" "pycache" "dist")))
+	     (py-never-extensions (my-parse-extensions '("pyc" ".d.ts"))))
+    (mapcar #'intern (split-string (format-spec "\"%a\" \"%b\" \"%c\" \"%d\" \"%e\" \"%f\" \"%g\" \"%h\" \"%i\" ||| "
+			            `((?a . ,paddy-find-script)
+			              (?b . ,root-directory)  ; search_root $1
+			              (?c . ,search-term)     ; search_term $2
+			              (?d . "") ; preferred_directories $3 - unused
+			              (?e . ,py-preferred-extensions) ; preferred_extensions $4 - unused
+			              (?f . ,py-secondary-directories) ; secondary_directories $5
+			              (?g . ,py-secondary-extensions) ; secondary_extensions $6
+			              (?h . ,py-never-directories) ; never_directories $7
+			              (?i . ,py-never-extensions) ; never_extensions $8
+			              ))
+                  "[\s\t]+"))))
+(consult--grep "Test prompt"
+               (lambda (paths)
+                 (lambda (&rest _)
+                   ;(paddy-py-find-grep "/Users/paddy/buckaroo" "color_map")
+		   '(("ls" "/Users/paddy/buckaroo"))
+
+))
+               "/Users/paddy/buckaroo"
+               "initial-text")
+
+(consult--grep "Test prompt"
+               (lambda (paths)
+                 (lambda (input)
+		   (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+					;(flags (append cmd opts))
+				(ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
+			 (cons (append "ls" (list "-e" arg) opts paths)
+			       (apply-partially #'consult--highlight-regexps
+						(list (regexp-quote arg)) ignore-case)))))
+
+               "/Users/paddy/buckaroo"
+               "initial-text")
 
 
 
+(defun my-find ()
+  (interactive)
+  (let ((consult-find-args (paddy-py-find-grep "/Users/paddy/Buckaroo" "color_map")))
+    (call-interactively 'consult-find)))
+paddy-py-find-grep
+
+(consult--grep "paddy-41" (paddy-py-find-grep "/Users/paddy/Buckaroo" "color_map") nil nil)
 
 
+normal-builder-res ((grep --exclude=.#* --exclude=*.o --exclude=*~ --exclude=*.ipynb --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=_MTN --null --line-buffered --color=never --ignore-case --with-filename --line-number -I -r -E -e never- .) . #[128 \302\301\303\300^D""\207 [((never-) (--ignore-case --with-filename --line-number -I -r)) consult--highlight-regexps apply append] 6 (subr.elc . 20470)]) [2 times]
+
+"/Users/paddy/.emacs.d/personal/find_script.sh \"/Users/paddy/Buckaroo\" \"color_map\" \"\" \".*\\.\\(py\\)$\" \".*\\.\\(\\.venv\\|foo\\).*\" \".*\\.\\(jsx?\\|tsx?\\)$\" \".*\\.\\(\\.\\(?:git\\|ruff\\)\\|dist\\|pycache\\).*\" \".*\\.\\(\\.d\\.ts\\|pyc\\)$\" "
 
 
-
-
-
-
-
-
-
-
-
-					;
-
-/Users/paddy/.emacs.d/personal/find_script.sh "~/Buckaroo" "color_map" "" ".*\.\(py\)$" ".*\.\(\.venv\|foo\).*" ".*\.\(jsx?\|tsx?\)$" ".*\.\(\.\(?:git\|ruff\)\|dist\|pycache\).*" ".*\.\(\.d\.ts\|pyc\)$" ||| "/Users/paddy/.emacs.d/personal/find_script.sh \"~/Buckaroo\" \"color_map\" \"\" \".*\\.\\(py\\)$\" \".*\\.\\(\\.venv\\|foo\\).*\" \".*\\.\\(jsx?\\|tsx?\\)$\" \".*\\.\\(\\.\\(?:git\\|ruff\\)\\|dist\\|pycache\\).*\" \".*\\.\\(\\.d\\.ts\\|pyc\\)$\" ||| "
-
-"/Users/paddy/.emacs.d/personal/find_script.sh \"~/Buckaroo\" \"color_map\" \"\" \".*\\.\\(py\\)$\" \".*\\.\\(\\.venv\\|foo\\).*\" \".*\\.\\(jsx?\\|tsx?\\)$\" \".*\\.\\(\\.\\(?:git\\|ruff\\)\\|dist\\|pycache\\).*\" \".*\\.\\(\\.d\\.ts\\|pyc\\)$\" ||| "
-
-"/Users/paddy/.emacs.d/personal/find_script.sh \"~/Buckaroo\" \"color_map\" \"\" \".*\\.\\(py\\)$\" \".*\\.\\(\\.venv\\|foo\\).*\" \".*\\.\\(jsx?\\|tsx?\\)$\" \".*\\.\\(\\.\\(?:git\\|ruff\\)\\|dist\\|pycache\\).*\" \".*\\.\\(\\.d\\.ts\\|pyc\\)$\" ||| "
-/Users/paddy/.emacs.d/personal/find_script.sh "~/Buckaroo" "color_map" "" ".*\.\(py\)$" ".*\.\(\.venv\|foo\).*" ".*\.\(jsx?\|tsx?\)$" ".*\.\(\.\(?:git\|ruff\)\|dist\|pycache\).*" ".*\.\(\.d\.ts\|pyc\)$" 
-
-;; why does (princ (format-spec ... also output the entire format spec args ? I put the ||| at the end so the delineation is clear
-
+"/Users/paddy/.emacs.d/personal/find_script.sh \"/Users/paddy/Buckaroo\" \"color_map\" \"\" \".*\\.\\(py\\)$\" \".*\\.\\(\\.venv\\|foo\\).*\" \".*\\.\\(jsx?\\|tsx?\\)$\" \".*\\.\\(\\.\\(?:git\\|ruff\\)\\|dist\\|pycache\\).*\" \".*\\.\\(\\.d\\.ts\\|pyc\\)$\" ||| "
 
 
 

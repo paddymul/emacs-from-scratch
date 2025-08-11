@@ -36,20 +36,24 @@ CUT_THRESHHOLD=300
 #preferred search
 $FIND_COMMAND $search_root\
 	      -type f  -iregex $preferred_extensions \
+	      -print0 \
 	      -not \(  -iregex $secondary_directories \) \
 	      -not \(  -iregex $secondary_extensions \) \
 	      -not \(  -iregex $never_directories \) \
 	      -not \(  -iregex $never_extensions \) \
-    | xargs grep  $search_term # | cut -c $CUT_THRESHHOLD  This doesn't work in an interactive terminal
+    | xargs -0 grep --null --line-number  $search_term  # | cut -c $CUT_THRESHHOLD  This doesn't work in an interactive terminal
 
 
 $FIND_COMMAND $search_root\
 	      -type f  -iregex $secondary_extensions \
+	      -print0 \
 	      -and \(  -iregex $secondary_directories \) \
               -not \(  -iregex $preferred_extensions \) \
 	      -not \(  -iregex $never_directories \) \
 	      -not \(  -iregex $never_extensions \) \
-    | xargs grep  $search_term # | cut -c $CUT_THRESHHOLD  This doesn't work in an interactive terminal
+    | xargs -0 grep --null  --line-number $search_term   # | cut -c $CUT_THRESHHOLD  This doesn't work in an interactive terminal
 
 #/Users/paddy/.emacs.d/personal/find_script.sh "/Users/paddy/buckaroo" "color_map" "" ".*\.\(py\)$" ".*\.\(venv\|foo|\.venv\).*" ".*\.\(jsx?\|tsx?\)$" ".*\.\(\.\(?:git\|ruff\)\|dist\|pycache\).*" ".*\.\(\.d\.ts\|pyc\)$" | wc -l
-returns reasonable results
+#returns reasonable results
+
+

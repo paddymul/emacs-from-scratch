@@ -125,7 +125,6 @@ Limit list of buffers to those matching the current
 		    ; would be cool to have special grep command
 		    ; linked with JQ for these files, but very
 		    ; specialized, late stage feature
-
 	  )))
 
 
@@ -199,3 +198,5 @@ Limit list of buffers to those matching the current
 (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
 (setq xref-prompt-for-identifier t)
 (provide 'paddy-completion-setup)
+
+
