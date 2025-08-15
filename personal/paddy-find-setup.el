@@ -49,7 +49,6 @@
 	  )))
 
 
-
 ;; works, accepts regexp and path
 (defun paddy-consult-py-find-grep ()
   (interactive)
@@ -117,10 +116,14 @@
 	  ))))))))
   (call-interactively 'consult-grep)))
 
+(with-eval-after-load 'python
+  (define-key python-mode-map
+	      (kbd "M-s M-g")
+	      'paddy-consult-py-find-grep))
 
 
 
-
-
-
-(defvar paddy-find-script  "/Users/paddy/.emacs.d/personal/find_script.sh")
+(with-eval-after-load 'python
+  (define-key python-mode-map
+	      (kbd "M-s M-g")
+	      'paddy-consult-py-find-grep))
