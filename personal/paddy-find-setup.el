@@ -148,6 +148,22 @@
 	  )))
 
 
+(defun paddy-shell-find-wrapper ()
+  (interactive)
+  (let ((current-directory default-directory))
+    (message "%s  paddy-shell-find-wrapper" current-directory)
+    (cond
+     ((string-prefix-p "/Users/paddy/buckaroo/packages/buckaroo-js-core" current-directory)
+      (message "%s  js-find-grep" current-directory)
+      (call-interactively 'paddy-consult-js-find-grep))
+
+     ((string-prefix-p "/Users/paddy/buckaroo" current-directory)
+      (message "%s  py-find-grep" current-directory)
+      (call-interactively 'paddy-consult-py-find-grep))
+     (t
+      (message "%s  default " current-directory)
+      (call-interactively 'consult-grep)))))
+
 
 (with-eval-after-load 'python
   (define-key python-ts-mode-map
@@ -163,8 +179,11 @@
 (with-eval-after-load 'python
   (define-key python-mode-map (kbd "M-s M-s") #'recenter))
 
+(with-eval-after-load 'shell-mode
+  (define-key shell-mode-map  (kbd "M-s M-g") #'paddy-shell-find-wrapper))
+
 (with-eval-after-load 'typescript-ts-mode
   (define-key typescript-ts-base-mode-map (kbd "M-s M-s") #'recenter)) 
 
-
  
+(provide 'paddy-find-setup)
