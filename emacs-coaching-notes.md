@@ -413,3 +413,13 @@ C-x C-f, how to make backward kill word not add to kill-ring
 
 
 big_file.md,  long python lines by default
+
+find-file-at-point doesn't work with special characters
+like /Users/paddy/sonderco/app//client_magic/(dashboard)/[client_slug]/[hash_slug]/page.tsx
+
+
+
+## 8/22
+work on tab formatting
+
+~/sonderco/app/api/webhooks/attio/route.ts

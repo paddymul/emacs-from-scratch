@@ -1,4 +1,11 @@
+;;;  -*- lexical-binding: t -*-
+(require 'consult)
+(defvar paddy-find-script  "/Users/paddy/.emacs.d/personal/find_script.sh")
+(defun my-parse-extensions (extensions)
+  (format ".*\\.%s$" (regexp-opt extensions t)))
 
+(defun my-parse-directories (directories)
+  (format ".*\\.?%s.*" (regexp-opt directories t)))
 
 
 (defun paddy-py-find-grep (root-directory search-term)
@@ -22,6 +29,25 @@
 			  ))
 ;	   )
     ))
+(defun consult--grep-make-builder (paths)
+  "Build grep command line and grep across PATHS."
+  (let* ((cmd (consult--build-args consult-grep-args))
+         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+    (lambda (input)
+      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                   (flags (append cmd opts))
+                   (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
+        (if (or (member "-F" flags) (member "--fixed-strings" flags))
+            (cons (append cmd (list "-e" arg) opts paths)
+                  (apply-partially #'consult--highlight-regexps
+                                   (list (regexp-quote arg)) ignore-case))
+          (pcase-let ((`(,re . ,hl) (consult--compile-regexp arg type ignore-case)))
+            (when re
+              (cons (append cmd
+                            (list (if (eq type 'pcre) "-P" "-E") ;; perl or extended
+                                  "-e" (consult--join-regexps re type))
+                            opts paths)
+                    hl))))))))
 
 ;; works, accepts regexp and path
 (defun paddy-consult-py-find-grep ()
@@ -30,9 +56,14 @@
        (symbol-function #'consult--grep-make-builder) (lambda (paths)
   "Build grep command line and grep across PATHS."
   (let* ((cmd (consult--build-args consult-grep-args))
-         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+	 (unused (progn (message "cmd 33 %s" cmd)))
+         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended))
+
+)
+    (message "cmd 37 %s" cmd)
     (lambda (input)
       (message "50 input %s" input)
+      (message "cmd 40 %s" cmd)
       (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
                    (flags (append cmd opts))
                    (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
@@ -78,36 +109,8 @@
 
 
 
-  (interactive)
-(cl-letf ((
-       (symbol-function #'consult--grep-make-builder) (lambda (paths)
-  "Build grep command line and grep across PATHS."
-  (let* ((cmd (consult--build-args consult-grep-args))
-         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
-    (lambda (input)
-      (message "50 input %s" input)
-      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
-                   (flags (append cmd opts))
-                   (ignore-case (or (member "-i" flags) (member "--ignore-case" flags))))
-	(message "54 arg %s flags %s" input flags)
-        (pcase-let ((`(,re . ,hl) (consult--compile-regexp arg type ignore-case)))
-	  (let (
-		(final-command (cons
-				(paddy-js-find-grep-list (car paths)  (consult--join-regexps re type))
-			       hl)))
-	  (message "final-command %s" final-command)
-	  final-command
-	  ))))))))
-  (call-interactively 'consult-grep)))
 
 
-
-(defvar paddy-find-script  "/Users/paddy/.emacs.d/personal/find_script.sh")
-(defun my-parse-extensions (extensions)
-  (format ".*\\.%s$" (regexp-opt extensions t)))
-
-(defun my-parse-directories (directories)
-  (format ".*\\.?%s.*" (regexp-opt directories t)))
 
 (defun paddy-py-find-grep-list (root-directory search-term)
   (let* ((py-preferred-extensions (my-parse-extensions '("py")))
@@ -147,7 +150,7 @@
 
 
 (with-eval-after-load 'python
-  (define-key python-mode-map
+  (define-key python-ts-mode-map
 	      (kbd "M-s M-g")
 	      #'paddy-consult-py-find-grep))
 

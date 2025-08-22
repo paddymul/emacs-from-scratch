@@ -101,24 +101,27 @@ Limit list of buffers to those matching the current
          ("M-s M-s" . consult-outline))
   :config
   (setq grep-find-ignored-directories
-		'("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN"
-		  ".pytest_cache" ; python projects I have never wanted to search it
-		  ".mypy_cache"  ; never want to search
-		  "node_modules" ; js projects - sometimes want to search
-		  ".next" ; generated next.  Never have wanted to search, only would to debug something funky
-		  "buckaroo/static"
+	'(
+	  ;"SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git"
+	  ".hg" ".bzr" "_MTN"
+		  ;; ".pytest_cache" ; python projects I have never wanted to search it
+		  ;; ".mypy_cache"  ; never want to search
+		  ;; "node_modules" ; js projects - sometimes want to search
+		  ;; ".next" ; generated next.  Never have wanted to search, only would to debug something funky
+		  ;; "buckaroo/static"
 		 ))
   (setq grep-find-ignored-files
-	'(".#*" "*.o" "*~" "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl"
-	  "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class"
-	  "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl"
-	  "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl"
-	  "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl"
-	  "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo"
-	  "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr"
-	  "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo"
-	  "widget.js"
-	  "embed-bundle.js" "embed-bundle.js.map"
+	'(".#*" "*.o" "*~" 
+;; "*.bin" "*.lbin" "*.so" "*.a" "*.ln" "*.blg" "*.bbl"
+;; 	  "*.elc" "*.lof" "*.glo" "*.idx" "*.lot" "*.fmt" "*.tfm" "*.class"
+;; 	  "*.fas" "*.lib" "*.mem" "*.x86f" "*.sparcf" "*.dfsl" "*.pfsl"
+;; 	  "*.d64fsl" "*.p64fsl" "*.lx64fsl" "*.lx32fsl" "*.dx64fsl" "*.dx32fsl"
+;; 	  "*.fx64fsl" "*.fx32fsl" "*.sx64fsl" "*.sx32fsl" "*.wx64fsl"
+;; 	  "*.wx32fsl" "*.fasl" "*.ufsl" "*.fsl" "*.dxl" "*.lo" "*.la" "*.gmo"
+;; 	  "*.mo" "*.toc" "*.aux" "*.cp" "*.fn" "*.ky" "*.pg" "*.tp" "*.vr"
+;; 	  "*.cps" "*.fns" "*.kys" "*.pgs" "*.tps" "*.vrs" "*.pyc" "*.pyo"
+;; 	  "widget.js"
+;; 	  "embed-bundle.js" "embed-bundle.js.map"
 	  "*.ipynb" ; I would only want to search the code of these
 		    ; files, almost never the output. The code output
 		    ; can be huge. whole file is stored as JSON. It

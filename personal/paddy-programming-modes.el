@@ -80,4 +80,16 @@
 
 (define-key global-map (kbd "s-m") (lambda () (interactive (message "super-m"))))
 
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+;;sample .dir-locals.el content to handle tab width
+;; ((typescript-ts-mode . ((paddy-var . "overridden in  /app/api/webhooks/attio/")
+;; 			(tab-width . 2)
+;; 			(indent-tabs-mode nil)
+;; 			)))
+
+
+
+
 (provide 'paddy-programming-modes)

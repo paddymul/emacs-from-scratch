@@ -609,9 +609,14 @@
 			 treesit-auto typescript-mode vertico
 			 visual-fill-column yaml-mode yasnippet))
  '(prelude-whitespace nil)
- '(safe-local-variable-values '((lsp-python-ms-python-executable . "/.../bin/python")))
+ '(safe-local-variable-values
+   '((paddy-var . "overridden in  /app/api/webhooks/attio/")
+     (paddy-var . "from /app/api/webhooks")
+     (conda-project-env-path . "ds-play")
+     (conda-project-env-path . "base")
+     (lsp-python-ms-python-executable . "/.../bin/python")))
  '(sp-override-key-bindings '(("s-o")))
- '(typescript-indent-level 2 t))
+ '(typescript-indent-level 2))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
